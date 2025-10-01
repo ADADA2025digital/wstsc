@@ -11,7 +11,7 @@ const Home = () => {
             { label: "Enrolment policy", active: true },
           ]}
         />
-        <div className="container pt-5 p-0">
+        <div className="container pt-5">
           <div className="row">
             <div className="col-md-12">
               <h1 className="heading dark-text">School Terms and Conditions</h1>
