@@ -1,0 +1,42 @@
+.banner-bg {
+  background-color: #295b66;
+}
+
+.dark-text {
+  color: #295b66;
+}
+
+/* Button */
+.globalbutton {
+  padding: 0.9rem 1.8rem;
+  border: 3px solid #295b66;
+  cursor: pointer;
+}
+
+.globalbutton::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #295b66;
+  transform: translateX(-100%);
+  transition: all 0.3s;
+  z-index: -1 !important;
+}
+
+.globalbutton:hover::before {
+  transform: translateX(0);
+  border: 3px solid #295b66;
+}
+
+.globalbutton:hover {
+  /* color: #fff !important; */
+  border: 3px solid #295b66 !important;
+}
+
+/* Breadcrumb */
+.breadcrumb-item + .breadcrumb-item::before {
+  color: #fff !important;
+}
