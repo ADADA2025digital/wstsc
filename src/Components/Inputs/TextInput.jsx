@@ -8,6 +8,7 @@ export default function TextInput({
   type = "text",
   required = false,
   help,
+  error,
 }) {
   return (
     <div className="mb-3">
@@ -16,13 +17,14 @@ export default function TextInput({
       </label>
       <input
         id={id}
-        className="form-control rounded-0"
+        className={`form-control rounded-0 ${error ? 'is-invalid' : ''}`}
         type={type}
         value={value || ''}
         placeholder={placeholder}
         required={required}
         onChange={(e) => onChange(e.target.value)}
       />
+      {error && <div className="invalid-feedback">{error}</div>}
       {help && <div className="form-text">{help}</div>}
     </div>
   );

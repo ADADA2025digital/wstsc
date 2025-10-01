@@ -7,9 +7,10 @@ export default function RadioGroup({
   onChange,
   inline = true,
   required = false,
+  error,
 }) {
   return (
-    <div className="d-flex justify-content-between mb-3">
+    <div className="mb-3">
       <div className="form-label">
         <span className="fw-bold">{label}</span> <span><i>{note}</i></span>{" "}
         {required && <span className="text-danger">*</span>}
@@ -21,7 +22,7 @@ export default function RadioGroup({
             key={opt.value}
           >
             <input
-              className="form-check-input"
+              className={`form-check-input ${error ? 'is-invalid' : ''}`}
               type="radio"
               name={name}
               id={`${name}-${opt.value}`}
@@ -39,6 +40,7 @@ export default function RadioGroup({
           </div>
         ))}
       </div>
+      {error && <div className="invalid-feedback d-block">{error}</div>}
     </div>
   );
 }
