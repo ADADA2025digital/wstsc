@@ -12,7 +12,7 @@ const Home = () => {
           ]}
         />
         <div className="container pt-5">
-          <div className="row">
+          <div className="row  d-flex justify-content-center">
             <div className="col-md-12">
               <h1 className="heading dark-text">School Terms and Conditions</h1>
 
