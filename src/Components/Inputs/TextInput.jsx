@@ -4,6 +4,7 @@ export default function TextInput({
   note,
   value,
   onChange,
+  onBlur,
   placeholder = "",
   type = "text",
   required = false,
@@ -23,6 +24,7 @@ export default function TextInput({
         placeholder={placeholder}
         required={required}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
       />
       {error && <div className="invalid-feedback">{error}</div>}
       {help && <div className="form-text">{help}</div>}

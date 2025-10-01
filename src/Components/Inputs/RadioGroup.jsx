@@ -5,6 +5,7 @@ export default function RadioGroup({
   options,
   value,
   onChange,
+  onBlur,
   inline = true,
   required = false,
   error,
@@ -15,7 +16,7 @@ export default function RadioGroup({
         <span className="fw-bold">{label}</span> <span><i>{note}</i></span>{" "}
         {required && <span className="text-danger">*</span>}
       </div>
-      <div className="d-flex gap-3">
+      <div className="d-flex gap-3" onBlur={onBlur}>
         {options.map((opt) => (
           <div
             className={`form-check ${inline ? "form-check-inline" : ""}`}
