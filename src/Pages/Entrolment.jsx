@@ -59,10 +59,7 @@ const Enrolment = () => {
                   Western Sydney Tamil Study Centre
                 </h4>
               </div>
-              <h1 className="display-5 fw-bold text-white mb-2">
-                NSW Community Languages Schools Program
-              </h1>
-              <h3 className="text-white-50 mb-0">
+              <h3 className="text-white-50 mb-0 mt-3">
                 Student enrolment and parent/carer consent form
               </h3>
             </div>
