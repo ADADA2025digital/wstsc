@@ -133,7 +133,7 @@ const Home = () => {
               <p>
                 The information requested in this form is required for the
                 purpose of the enrolment of a student by the school.
-                Wentworthville Tamil Study Centre Inc. has a policy that covers
+                Western Sydney Tamil Study Centre Inc. has a policy that covers
                 the security, confidentiality, and privacy of information
                 obtained. <br /> <br />
                 The enrolment form looks plain, but it does the job. This form
@@ -155,7 +155,7 @@ const Home = () => {
                 NB: You can pay school fees by{" "}
                 <strong>Creative Kids Voucher (CKV)</strong>, or cash at the
                 counter during school hours. Please send your Creative Kids
-                Voucher to accounts@wtsc.org.au if you want to pay by{" "}
+                Voucher to info@wstsc.org.au if you want to pay by{" "}
                 <strong>CKV</strong>.
               </p>
 
