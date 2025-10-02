@@ -119,7 +119,7 @@ export const EnrolmentFormProvider = ({ children }) => {
           [field]: value,
         },
       };
-      
+     
       return newFormData;
     });
 
@@ -225,12 +225,13 @@ export const EnrolmentFormProvider = ({ children }) => {
           message: 'This field is required'
         };
 
+      // REMOVED isPastDate validation for declaration dates
       case 'first_parent_carer_name_date':
       case 'second_parent_carer_name_date':
         return {
           ...rules,
-          isPastDate: true,
-          message: 'Date cannot be in the future'
+          // Only required validation, no future date restriction
+          message: 'This field is required'
         };
 
       // Year field - Only required, no K-12 validation
@@ -293,7 +294,9 @@ export const EnrolmentFormProvider = ({ children }) => {
         isValid = false;
       }
 
-      if (rules.isPastDate) {
+      // REMOVED the isPastDate validation check for all fields
+      // Only date_of_birth still has isPastDate in rules, but we'll skip it for declaration dates
+      if (rules.isPastDate && field !== 'first_parent_carer_name_date' && field !== 'second_parent_carer_name_date') {
         const date = new Date(value);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -322,7 +325,7 @@ export const EnrolmentFormProvider = ({ children }) => {
     // Update errors state
     setErrors(prev => {
       const newErrors = { ...prev };
-      
+     
       if (!newErrors[section]) {
         newErrors[section] = {};
       }
@@ -379,31 +382,38 @@ export const EnrolmentFormProvider = ({ children }) => {
   };
 
   // Validate entire form before submission
-  const validateForm = () => {
+  const validateForm = (personalDeclarationOnly = false) => {
     let hasErrors = false;
 
     // Clear previous general error
     setError(null);
 
-    // Validate all sections
-    const sections = [
-      'student', 'parent_carer_1', 'parent_carer_2', 'parent_living_details',
-      'first_contact', 'second_contact', 'parent_not_living',
-      'first_emergency_contact', 'second_emergency_contact', 'personal_declaration'
-    ];
-
-    sections.forEach(section => {
-      if (!validateSection(section)) {
+    if (personalDeclarationOnly) {
+      // Only validate personal declaration section
+      if (!validateSection('personal_declaration')) {
         hasErrors = true;
       }
-    });
+    } else {
+      // Validate all sections
+      const sections = [
+        'student', 'parent_carer_1', 'parent_carer_2', 'parent_living_details',
+        'first_contact', 'second_contact', 'parent_not_living',
+        'first_emergency_contact', 'second_emergency_contact', 'personal_declaration'
+      ];
+
+      sections.forEach(section => {
+        if (!validateSection(section)) {
+          hasErrors = true;
+        }
+      });
+    }
 
     return !hasErrors;
   };
 
-  const submitForm = async () => {
+  const submitForm = async (personalDeclarationOnly = false) => {
     // Validate form before submission
-    if (!validateForm()) {
+    if (!validateForm(personalDeclarationOnly)) {
       if (!error) {
         setError('Please complete all required fields before submitting the form.');
       }
@@ -432,8 +442,8 @@ export const EnrolmentFormProvider = ({ children }) => {
         },
         parent_living_details: {
           ...formData.parent_living_details,
-          is_student_residential_address: formData.parent_living_details.is_student_residential_address === null 
-            ? false 
+          is_student_residential_address: formData.parent_living_details.is_student_residential_address === null
+            ? false
             : formData.parent_living_details.is_student_residential_address,
         },
       };

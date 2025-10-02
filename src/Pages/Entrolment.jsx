@@ -6,6 +6,7 @@ import PersonalInfoAndDeclaration from "../Components/PersonalInfoAndDeclaration
 import SectionHeader from "../Components/SectionHeader";
 import StudentDetails from "../Components/StudentDetails";
 import { useEnrolmentForm } from "../Context/EnrolmentFormContext";
+import Logo from "../assets/Images/logo.jpg";
 
 const Enrolment = () => {
   const { error, success } = useEnrolmentForm();
@@ -47,7 +48,17 @@ const Enrolment = () => {
         {/* Form Header */}
         <header className="banner-bg container p-5 d-flex align-items-center">
           <div className="row">
-            <div className="col-lg-12 d-flex flex-column align-items-start justify-content-end mt-5">
+            <div className="col-lg-12 d-flex flex-column align-items-start justify-content-end mt-3">
+              <div className="d-flex gap-3 align-items-center">
+                <img
+                  src={Logo}
+                  alt=""
+                  style={{ width: "80px", height: "80px" }}
+                />{" "}
+                <h4 className="text-white">
+                  Western Sydney Tamil Study Centre
+                </h4>
+              </div>
               <h1 className="display-5 fw-bold text-white mb-2">
                 NSW Community Languages Schools Program
               </h1>
