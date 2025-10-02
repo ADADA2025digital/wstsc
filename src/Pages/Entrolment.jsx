@@ -67,7 +67,7 @@ const Enrolment = () => {
         </header>
 
         {/* Progress Indicator - Numbered Circles */}
-        <div className="container py-4">
+        <div className="container d-md-flex d-none py-4">
           <div className="row">
             <div className="col-12">
               <div className="d-flex justify-content-center align-items-center mb-3">
