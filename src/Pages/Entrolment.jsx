@@ -67,7 +67,7 @@ const Enrolment = () => {
         </header>
 
         {/* Progress Indicator - Numbered Circles */}
-        <div className="container d-md-flex d-none justify-content-center align-items-center py-4">
+        <div className="container d-md-flex justify-content-center align-items-center py-4">
           <div className="row">
             <div className="col-12">
               <div className="d-flex justify-content-center align-items-center mb-3">
@@ -80,16 +80,12 @@ const Enrolment = () => {
                       <React.Fragment key={index}>
                         {/* Step Circle */}
                         <div
-                          className={`rounded-circle d-flex align-items-center justify-content-center ${
+                          className={`progress-circle rounded-circle d-flex align-items-center justify-content-center fw-bold ${
                             isCompleted
                               ? "banner-bg text-white"
                               : "border border-secondary bg-white text-secondary"
                           }`}
                           style={{
-                            width: "40px",
-                            height: "40px",
-                            fontSize: "16px",
-                            fontWeight: "bold",
                             borderWidth: "2px",
                             boxShadow: isCurrent ? "0 0 0 3px #295b66" : "none",
                           }}
@@ -99,14 +95,9 @@ const Enrolment = () => {
 
                         {index < steps.length - 1 && (
                           <div
-                            className={`mx-2 ${
+                            className={`mx-2 progress-line ${
                               isCompleted ? "banner-bg" : "bg-light"
                             }`}
-                            style={{
-                              width: "60px",
-                              height: "3px",
-                              borderRadius: "2px",
-                            }}
                           ></div>
                         )}
                       </React.Fragment>

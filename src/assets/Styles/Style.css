@@ -40,3 +40,37 @@
 .breadcrumb-item + .breadcrumb-item::before {
   color: #fff !important;
 }
+
+/* Progress */
+.progress-line {
+  width: 60px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.progress-circle {
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 950px) {
+  .progress-line {
+    width: 40px;
+  }
+
+  .progress-circle {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-line {
+    width: 40px;
+  }
+
+  .progress-circle {
+    width: 30px;
+    height: 30px;
+  }
+}
