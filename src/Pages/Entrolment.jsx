@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import FamilyDetails from "../Components/FamilyDetails";
 import FamilyDetailsPhase2 from "../Components/FamilyDetailsPhase2";
 import FamilyDetailsPhase3 from "../Components/FamilyDetailsPhase3";
 import PersonalInfoAndDeclaration from "../Components/PersonalInfoAndDeclaration";
 import SectionHeader from "../Components/SectionHeader";
 import StudentDetails from "../Components/StudentDetails";
-import { useEnrolmentForm } from '../Context/EnrolmentFormContext';
+import { useEnrolmentForm } from "../Context/EnrolmentFormContext";
 
 const Enrolment = () => {
   const { error, success } = useEnrolmentForm();
@@ -13,18 +13,30 @@ const Enrolment = () => {
 
   const steps = [
     { component: StudentDetails, title: "Student details" },
-    { component: FamilyDetails, title: "Family details - Parent/Carer Information" },
-    { component: FamilyDetailsPhase2, title: "Family details - Contact Information" },
-    { component: FamilyDetailsPhase3, title: "Family details - Additional Details" },
-    { component: PersonalInfoAndDeclaration, title: "Personal information and declaration of accuracy" }
+    {
+      component: FamilyDetails,
+      title: "Family details - Parent/Carer Information",
+    },
+    {
+      component: FamilyDetailsPhase2,
+      title: "Family details - Contact Information",
+    },
+    {
+      component: FamilyDetailsPhase3,
+      title: "Family details - Additional Details",
+    },
+    {
+      component: PersonalInfoAndDeclaration,
+      title: "Personal information and declaration of accuracy",
+    },
   ];
 
   const handleNext = () => {
-    setCurrentStep(prev => prev + 1);
+    setCurrentStep((prev) => prev + 1);
   };
 
   const handlePrevious = () => {
-    setCurrentStep(prev => prev - 1);
+    setCurrentStep((prev) => prev - 1);
   };
 
   const CurrentComponent = steps[currentStep].component;
@@ -55,35 +67,37 @@ const Enrolment = () => {
                   {steps.map((step, index) => {
                     const isCompleted = index <= currentStep;
                     const isCurrent = index === currentStep;
-                    
+
                     return (
                       <React.Fragment key={index}>
                         {/* Step Circle */}
                         <div
                           className={`rounded-circle d-flex align-items-center justify-content-center ${
-                            isCompleted 
-                              ? 'banner-bg text-white' 
-                              : 'border border-secondary bg-white text-secondary'
+                            isCompleted
+                              ? "banner-bg text-white"
+                              : "border border-secondary bg-white text-secondary"
                           }`}
                           style={{
-                            width: '40px',
-                            height: '40px',
-                            fontSize: '16px',
-                            fontWeight: 'bold',
-                            borderWidth: '2px',
-                            boxShadow: isCurrent ? '0 0 0 3px #295b66' : 'none'
+                            width: "40px",
+                            height: "40px",
+                            fontSize: "16px",
+                            fontWeight: "bold",
+                            borderWidth: "2px",
+                            boxShadow: isCurrent ? "0 0 0 3px #295b66" : "none",
                           }}
                         >
                           {index + 1}
                         </div>
-                        
+
                         {index < steps.length - 1 && (
-                          <div 
-                            className={`mx-2 ${isCompleted ? 'banner-bg' : 'bg-light'}`}
+                          <div
+                            className={`mx-2 ${
+                              isCompleted ? "banner-bg" : "bg-light"
+                            }`}
                             style={{
-                              width: '60px',
-                              height: '3px',
-                              borderRadius: '2px'
+                              width: "60px",
+                              height: "3px",
+                              borderRadius: "2px",
                             }}
                           ></div>
                         )}
@@ -100,10 +114,13 @@ const Enrolment = () => {
           <div className="row">
             <div className="col-lg-10 p-0">
               <h5 className="dark-text text-secondary mb-3">
-                This enrolment and parent/carer consent form is to be completed in English.
+                This enrolment and parent/carer consent form is to be completed
+                in English.
               </h5>
               <p className="text-muted">
-                Student details provided on the form should match those provided to the student's day school. A separate form is to be completed for each student annually.
+                Student details provided on the form should match those provided
+                to the student's day school. A separate form is to be completed
+                for each student annually.
               </p>
             </div>
           </div>
@@ -133,13 +150,13 @@ const Enrolment = () => {
 
           {/* Navigation Buttons */}
           {currentStep > 0 && (
-            <div className="container py-3">
+            <div className="container py-3 px-0">
               <div className="row">
                 <div className="col-12 d-flex justify-content-between">
                   <button
                     type="button"
                     onClick={handlePrevious}
-                    className="btn btn-secondary"
+                    className="btn globalbutton rounded-0 dark-text fw-bold fs-5 position-relative overflow-hidden"
                   >
                     Previous Step
                   </button>

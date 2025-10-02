@@ -5,7 +5,7 @@ import RadioGroup from "./Inputs/RadioGroup.jsx";
 import { useEnrolmentForm } from '../Context/EnrolmentFormContext';
 
 export default function FamilyDetails({ onNext }) {
-  const { formData, updateFormData, validateField, getError, validateSection, isAtLeastOneParentSectionFilled } = useEnrolmentForm();
+  const { formData, updateFormData, validateField, getError, validateSection } = useEnrolmentForm();
   const [sectionError, setSectionError] = useState('');
 
   const handleInputChange = (section, field, value) => {
@@ -20,26 +20,54 @@ export default function FamilyDetails({ onNext }) {
     validateField(section, field, value);
   };
 
+  // Check if a parent section is fully filled
+  const isParentSectionFilled = (section) => {
+    const sectionData = formData[section];
+    return Object.values(sectionData).every(value => 
+      value !== null && value !== undefined && value !== ''
+    );
+  };
+
+  // Check if section C is fully filled
+  const isSectionCFilled = () => {
+    const sectionData = formData.parent_living_details;
+    
+    // Check required fields that are always visible
+    const requiredFields = ['correspondence_name', 'residential_address', 'is_student_residential_address'];
+    const basicFieldsFilled = requiredFields.every(field => 
+      sectionData[field] !== null && sectionData[field] !== undefined && sectionData[field] !== ''
+    );
+    
+    // If correspondence address is shown, check if it's filled
+    if (sectionData.is_student_residential_address === false) {
+      return basicFieldsFilled && 
+             sectionData.correspondence_address !== null && 
+             sectionData.correspondence_address !== undefined && 
+             sectionData.correspondence_address !== '';
+    }
+    
+    return basicFieldsFilled;
+  };
+
   const handleNext = () => {
-    // Validate all sections in this component
-    const parent1Valid = validateSection('parent_carer_1');
-    const parent2Valid = validateSection('parent_carer_2');
-    const livingDetailsValid = validateSection('parent_living_details');
+    // Check if at least one parent section is fully filled OR section C is filled
+    const hasParent1Filled = isParentSectionFilled('parent_carer_1');
+    const hasParent2Filled = isParentSectionFilled('parent_carer_2');
+    const hasSectionCFilled = isSectionCFilled();
     
-    // Check if at least one parent section is filled
-    const hasAtLeastOneParent = isAtLeastOneParentSectionFilled();
+    // User can proceed if:
+    // 1. Section C is filled (regardless of parent sections)
+    // OR
+    // 2. At least one parent section is filled (even if section C is not filled)
+    const canProceed = hasSectionCFilled || hasParent1Filled || hasParent2Filled;
     
-    if (parent1Valid && parent2Valid && livingDetailsValid && hasAtLeastOneParent) {
+    if (canProceed) {
       setSectionError('');
       if (onNext) {
         onNext();
       }
     } else {
-      if (!hasAtLeastOneParent) {
-        setSectionError('Please fill at least one parent/carer section (Parent/Carer 1 or Parent/Carer 2)');
-      } else {
-        setSectionError('Please fix the validation errors before proceeding to the next step.');
-      }
+      setSectionError('Please complete all fields in at least one section (either Parent/Carer 1, Parent/Carer 2, or section C) before proceeding to the next step.');
     }
   };
 
@@ -51,13 +79,6 @@ export default function FamilyDetails({ onNext }) {
       <h2 className="h4 mb-3">
         B. Parent/Carer 1 with whom this student normally lives
       </h2>
-
-      {/* Section Error Message */}
-      {sectionError && (
-        <div className="alert alert-danger" role="alert">
-          {sectionError}
-        </div>
-      )}
 
       <div className="row align-items-end gap-5">
         <div className="col-md-4">
@@ -260,6 +281,7 @@ export default function FamilyDetails({ onNext }) {
               onChange={(value) => handleInputChange('parent_living_details', 'correspondence_address', value)}
               onBlur={() => handleBlur('parent_living_details', 'correspondence_address')}
               error={getError('parent_living_details', 'correspondence_address')}
+              required
             />
             <p className="m-0">
               <i>
@@ -283,6 +305,19 @@ export default function FamilyDetails({ onNext }) {
           </i>
         </p>
       </div>
+
+      {/* Section Error Message above the button */}
+      {sectionError && (
+        <div className="container py-3">
+          <div className="row">
+            <div className="col-12">
+              <div className="alert alert-danger" role="alert">
+                {sectionError}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Next Button */}
       <div className="container py-3 py-lg-5">
