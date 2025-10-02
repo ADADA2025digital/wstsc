@@ -65,7 +65,7 @@ const Home = () => {
                   <p>
                     Enrolment signifies agreement with the rules and regulations
                     of the school (as published on the information booklet which
-                    is on the WTSC website, common sense, and appropriate
+                    is on the WSTSC website, common sense, and appropriate
                     behaviour etc.) and intention to abide thereby.
                   </p>
                 </li>
