@@ -4,6 +4,7 @@ export default function TextArea({
   note,
   value,
   onChange,
+  onBlur, // Add this line
   rows = 4,
   placeholder = "",
   required = false,
@@ -22,6 +23,7 @@ export default function TextArea({
         placeholder={placeholder}
         required={required}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur} // Add this line - connect onBlur to the textarea
       />
       {error && <div className="invalid-feedback">{error}</div>}
     </div>

@@ -25,6 +25,7 @@ export const EnrolmentFormProvider = ({ children }) => {
       overseas_student: null,
       community_school_name: "",
       day_school_location: "",
+      day_school_location_optional: "",
       enrolment_date: "",
       day_school_name: "",
       attendance_from: "",
@@ -49,7 +50,7 @@ export const EnrolmentFormProvider = ({ children }) => {
     parent_living_details: {
       correspondence_name: "",
       residential_address: "",
-      is_student_residential_address: true,
+      is_student_residential_address: null,
       correspondence_address: "",
     },
     first_contact: {
@@ -134,181 +135,268 @@ export const EnrolmentFormProvider = ({ children }) => {
     }
   };
 
-  // Validation function
+  // Specific validation rules for different field types
+  const getValidationRules = (section, field) => {
+    const rules = {
+      required: true, // All fields are required
+    };
+
+    switch (field) {
+      // Name fields
+      case 'family_name':
+      case 'first_given_name':
+      case 'second_given_name':
+      case 'preferred_first_name':
+      case 'given_name':
+      case 'parent_name':
+      case 'first_parent_carer_name':
+      case 'second_parent_carer_name':
+      case 'correspondence_name':
+        return {
+          ...rules,
+          pattern: /^[A-Za-z\s]{2,}$/,
+          message: 'Must contain at least 2 letters and only letters/spaces',
+          invalidChars: /[0-9@#$%^&*()_+=\-[\]{};:"\\|,.<>?/~`]/
+        };
+
+      // School name fields
+      case 'community_school_name':
+      case 'day_school_location':
+      case 'day_school_name':
+      case 'day_school_location_optional':
+        return {
+          ...rules,
+          pattern: /^[A-Za-z\s]{2,}$/,
+          message: 'Must contain at least 2 letters and only letters/spaces',
+          invalidChars: /[0-9@#$%^&*()_+=\-[\]{};:"\\|,.<>?/~`]/
+        };
+
+      // Title and relationship fields
+      case 'title':
+      case 'relationship_to_student':
+      case 'country_of_birth':
+        return {
+          ...rules,
+          pattern: /^[A-Za-z\s]{2,}$/,
+          message: 'Must contain at least 2 letters and only letters/spaces',
+          invalidChars: /[0-9@#$%^&*()_+=\-[\]{};:"\\|,.<>?/~`]/
+        };
+
+      // Phone fields
+      case 'mobile_phone':
+      case 'home_phone':
+      case 'work_phone':
+        return {
+          ...rules,
+          pattern: /^[0-9+\-\s()]{8,}$/,
+          message: 'Must be a valid phone number with at least 8 digits',
+          minLength: 8
+        };
+
+      // Email fields
+      case 'email':
+        return {
+          ...rules,
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          message: 'Please enter a valid email address'
+        };
+
+      // Address fields
+      case 'residential_address':
+      case 'correspondence_address':
+        return {
+          ...rules,
+          pattern: /^[A-Za-z0-9\s,.-]{5,}$/,
+          message: 'Must be a valid address with at least 5 characters'
+        };
+
+      // Date fields
+      case 'date_of_birth':
+        return {
+          ...rules,
+          isPastDate: true,
+          message: 'Date of birth must be in the past'
+        };
+
+      case 'enrolment_date':
+        return {
+          ...rules,
+          // Only required validation, no future date restriction
+          message: 'This field is required'
+        };
+
+      case 'first_parent_carer_name_date':
+      case 'second_parent_carer_name_date':
+        return {
+          ...rules,
+          isPastDate: true,
+          message: 'Date cannot be in the future'
+        };
+
+      // Year field - Only required, no K-12 validation
+      case 'enrollment_year':
+        return {
+          ...rules,
+          message: 'This field is required'
+        };
+
+      // Month fields
+      case 'attendance_from':
+      case 'attendance_to':
+        return {
+          ...rules,
+          isMonthYear: true,
+          message: 'Please select a valid month and year'
+        };
+
+      // Boolean fields - accept both true and false, but not null/undefined
+      case 'overseas_student':
+      case 'is_student_residential_address':
+        return {
+          ...rules,
+          isBoolean: true,
+          message: 'This field is required',
+          validateBoolean: (value) => value !== null && value !== undefined
+        };
+
+      default:
+        return rules;
+    }
+  };
+
+  // Validation function - ALL FIELDS REQUIRED
   const validateField = (section, field, value) => {
+    const rules = getValidationRules(section, field);
+    let isValid = true;
+    let errorMessage = '';
+
+    // Custom validation for boolean fields
+    if (rules.validateBoolean) {
+      if (!rules.validateBoolean(value)) {
+        errorMessage = rules.message;
+        isValid = false;
+      }
+    }
+    // Regular required validation for other fields
+    else if (value === null || value === undefined || value === '') {
+      errorMessage = 'This field is required';
+      isValid = false;
+    } else {
+      // Field-specific validation
+      if (rules.pattern && !rules.pattern.test(value)) {
+        errorMessage = rules.message;
+        isValid = false;
+      }
+
+      if (rules.invalidChars && rules.invalidChars.test(value)) {
+        errorMessage = 'Cannot contain numbers or special symbols';
+        isValid = false;
+      }
+
+      if (rules.isPastDate) {
+        const date = new Date(value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (date >= today) {
+          errorMessage = rules.message;
+          isValid = false;
+        }
+      }
+
+      if (rules.isMonthYear && !value.match(/^\d{4}-\d{2}$/)) {
+        errorMessage = rules.message;
+        isValid = false;
+      }
+
+      // Special validation for attendance_to date
+      if (field === 'attendance_to' && formData.student.attendance_from && value) {
+        const fromDate = new Date(formData.student.attendance_from + '-01');
+        const toDate = new Date(value + '-01');
+        if (toDate <= fromDate) {
+          errorMessage = 'End date must be after start date';
+          isValid = false;
+        }
+      }
+    }
+
+    // Update errors state
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      
+      if (!newErrors[section]) {
+        newErrors[section] = {};
+      }
+
+      if (!isValid) {
+        newErrors[section][field] = errorMessage;
+      } else {
+        delete newErrors[section][field];
+      }
+
+      return newErrors;
+    });
+
+    return isValid;
+  };
+
+  // Section validation function - ALL FIELDS REQUIRED
+  const validateSection = (section) => {
+    let hasErrors = false;
+    const sectionData = formData[section];
     const newErrors = { ...errors };
-    
+
     if (!newErrors[section]) {
       newErrors[section] = {};
     }
 
-    let isValid = true;
-    let errorMessage = '';
-
-    // Validation patterns
-    const namePattern = /^[A-Za-z\s]{2,}$/; // Only letters and spaces, at least 2 characters
-    const hasInvalidChars = /[0-9@#$%^&*()_+=\-[\]{};:"\\|,.<>?/~`]/; // Characters that are invalid
-
-    switch (field) {
-      case 'family_name':
-      case 'first_given_name':
-        if (!value || value.trim() === '') {
-          errorMessage = 'This field is required';
-          isValid = false;
-        } else if (hasInvalidChars.test(value)) {
-          errorMessage = 'Cannot contain numbers or symbols like @, #, $, 1, 2, 3, etc.';
-          isValid = false;
-        } else if (!namePattern.test(value)) {
-          errorMessage = 'Must contain at least 2 letters and only letters/spaces';
-          isValid = false;
-        }
-        break;
-
-      case 'second_given_name':
-      case 'preferred_first_name':
-        if (value && value.trim() !== '') {
-          if (hasInvalidChars.test(value)) {
-            errorMessage = 'Cannot contain numbers or symbols like @, #, $, 1, 2, 3, etc.';
-            isValid = false;
-          } else if (!namePattern.test(value)) {
-            errorMessage = 'Must contain at least 2 letters and only letters/spaces';
-            isValid = false;
-          }
-        }
-        break;
-
-      case 'date_of_birth':
-        if (!value) {
-          errorMessage = 'Date of birth is required';
-          isValid = false;
-        } else {
-          const dob = new Date(value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          if (dob >= today) {
-            errorMessage = 'Date of birth must be in the past';
-            isValid = false;
-          }
-        }
-        break;
-
-      case 'gender':
-        if (!value) {
-          errorMessage = 'Gender is required';
-          isValid = false;
-        }
-        break;
-
-      case 'enrollment_year':
-        if (!value) {
-          errorMessage = 'Year enrolled is required';
-          isValid = false;
-        } else {
-          const year = parseInt(value);
-          if (isNaN(year) || year < 0 || year > 12) {
-            errorMessage = 'Must be a valid year between K-12';
-            isValid = false;
-          }
-        }
-        break;
-
-      case 'overseas_student':
-        if (value === null || value === undefined) {
-          errorMessage = 'This field is required';
-          isValid = false;
-        }
-        break;
-
-      case 'community_school_name':
-      case 'day_school_location':
-        if (!value || value.trim() === '') {
-          errorMessage = 'This field is required';
-          isValid = false;
-        } else if (hasInvalidChars.test(value)) {
-          errorMessage = 'Cannot contain numbers or symbols like @, #, $, 1, 2, 3, etc.';
-          isValid = false;
-        } else if (!namePattern.test(value)) {
-          errorMessage = 'Must contain at least 2 letters and only letters/spaces';
-          isValid = false;
-        }
-        break;
-
-      case 'enrolment_date':
-        if (!value) {
-          errorMessage = 'Enrolment date is required';
-          isValid = false;
-        } else {
-          const enrolmentDate = new Date(value);
-          const today = new Date();
-          if (enrolmentDate > today) {
-            errorMessage = 'Enrolment date cannot be in the future';
-            isValid = false;
-          }
-        }
-        break;
-
-      case 'day_school_name':
-        if (value && value.trim() !== '') {
-          if (hasInvalidChars.test(value)) {
-            errorMessage = 'Cannot contain numbers or symbols like @, #, $, 1, 2, 3, etc.';
-            isValid = false;
-          } else if (!namePattern.test(value)) {
-            errorMessage = 'Must contain at least 2 letters and only letters/spaces';
-            isValid = false;
-          }
-        }
-        break;
-
-      case 'attendance_to':
-        if (value && formData.student.attendance_from) {
-          const fromDate = new Date(formData.student.attendance_from + '-01');
-          const toDate = new Date(value + '-01');
-          if (toDate <= fromDate) {
-            errorMessage = 'End date must be after start date';
-            isValid = false;
-          }
-        }
-        break;
-
-      default:
-        break;
-    }
-
-    if (!isValid) {
-      newErrors[section][field] = errorMessage;
-    } else {
-      delete newErrors[section][field];
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  // Validate entire form before submission
-  const validateForm = () => {
-    const newErrors = {};
-    let hasErrors = false;
-
-    // Student section validation
-    const studentRequiredFields = [
-      'family_name', 'first_given_name', 'date_of_birth', 'gender', 
-      'enrollment_year', 'overseas_student', 'community_school_name', 
-      'day_school_location', 'enrolment_date'
-    ];
-
-    studentRequiredFields.forEach(field => {
-      const value = formData.student[field];
-      if (!validateField('student', field, value)) {
+    // Validate ALL fields in the section
+    Object.keys(sectionData).forEach(field => {
+      if (!validateField(section, field, sectionData[field])) {
         hasErrors = true;
       }
     });
 
-    // Validate attendance dates
-    if (formData.student.attendance_from && formData.student.attendance_to) {
-      if (!validateField('student', 'attendance_to', formData.student.attendance_to)) {
-        hasErrors = true;
+    // Special validation for attendance dates
+    if (section === 'student') {
+      if (formData.student.attendance_from && formData.student.attendance_to) {
+        if (!validateField('student', 'attendance_to', formData.student.attendance_to)) {
+          hasErrors = true;
+        }
       }
     }
+
+    // Special validation for correspondence address
+    if (section === 'parent_living_details') {
+      if (formData.parent_living_details.is_student_residential_address === false) {
+        if (!validateField('parent_living_details', 'correspondence_address', formData.parent_living_details.correspondence_address)) {
+          hasErrors = true;
+        }
+      }
+    }
+
+    setErrors(newErrors);
+    return !hasErrors;
+  };
+
+  // Validate entire form before submission
+  const validateForm = () => {
+    let hasErrors = false;
+
+    // Clear previous general error
+    setError(null);
+
+    // Validate all sections
+    const sections = [
+      'student', 'parent_carer_1', 'parent_carer_2', 'parent_living_details',
+      'first_contact', 'second_contact', 'parent_not_living',
+      'first_emergency_contact', 'second_emergency_contact', 'personal_declaration'
+    ];
+
+    sections.forEach(section => {
+      if (!validateSection(section)) {
+        hasErrors = true;
+      }
+    });
 
     return !hasErrors;
   };
@@ -316,7 +404,9 @@ export const EnrolmentFormProvider = ({ children }) => {
   const submitForm = async () => {
     // Validate form before submission
     if (!validateForm()) {
-      setError('Please fix the validation errors before submitting');
+      if (!error) {
+        setError('Please complete all required fields before submitting the form.');
+      }
       throw new Error('Form validation failed');
     }
 
@@ -325,6 +415,7 @@ export const EnrolmentFormProvider = ({ children }) => {
     setSuccess(false);
 
     try {
+      // Prepare data for backend - convert null to false for boolean fields
       const submissionData = {
         ...formData,
         student: {
@@ -339,12 +430,17 @@ export const EnrolmentFormProvider = ({ children }) => {
               : "Not specified",
           overseas_student: Boolean(formData.student.overseas_student),
         },
+        parent_living_details: {
+          ...formData.parent_living_details,
+          is_student_residential_address: formData.parent_living_details.is_student_residential_address === null 
+            ? false 
+            : formData.parent_living_details.is_student_residential_address,
+        },
       };
 
+      // Remove temporary fields used for date range
       delete submissionData.student.attendance_from;
       delete submissionData.student.attendance_to;
-      delete submissionData.student.community_school_name;
-      delete submissionData.student.enrolment_date;
 
       console.log("Submitting data:", submissionData);
 
@@ -406,6 +502,104 @@ export const EnrolmentFormProvider = ({ children }) => {
     return errors[section]?.[field] || '';
   };
 
+  // Reset form data
+  const resetForm = () => {
+    setFormData({
+      student: {
+        family_name: "",
+        first_given_name: "",
+        second_given_name: "",
+        preferred_first_name: "",
+        gender: "",
+        date_of_birth: "",
+        enrollment_year: "",
+        overseas_student: null,
+        community_school_name: "",
+        day_school_location: "",
+        day_school_location_optional: "",
+        enrolment_date: "",
+        day_school_name: "",
+        attendance_from: "",
+        attendance_to: "",
+      },
+      parent_carer_1: {
+        title: "",
+        gender: "",
+        relationship_to_student: "",
+        family_name: "",
+        given_name: "",
+        country_of_birth: "",
+      },
+      parent_carer_2: {
+        title: "",
+        gender: "",
+        relationship_to_student: "",
+        family_name: "",
+        given_name: "",
+        country_of_birth: "",
+      },
+      parent_living_details: {
+        correspondence_name: "",
+        residential_address: "",
+        is_student_residential_address: null,
+        correspondence_address: "",
+      },
+      first_contact: {
+        parent_name: "",
+        mobile_phone: "",
+        home_phone: "",
+        work_phone: "",
+        email: "",
+      },
+      second_contact: {
+        parent_name: "",
+        mobile_phone: "",
+        home_phone: "",
+        work_phone: "",
+        email: "",
+      },
+      parent_not_living: {
+        title: "",
+        gender: "",
+        relationship_to_student: "",
+        family_name: "",
+        given_name: "",
+        mobile_phone: "",
+        home_phone: "",
+        work_phone: "",
+        email: "",
+        residential_address: "",
+        does_student_reside_here: false,
+        correspondence_address: "",
+      },
+      first_emergency_contact: {
+        family_name: "",
+        given_name: "",
+        relationship_to_student: "",
+        mobile_phone: "",
+        home_phone: "",
+        work_phone: "",
+      },
+      second_emergency_contact: {
+        family_name: "",
+        given_name: "",
+        relationship_to_student: "",
+        mobile_phone: "",
+        home_phone: "",
+        work_phone: "",
+      },
+      personal_declaration: {
+        first_parent_carer_name: "",
+        first_parent_carer_name_date: "",
+        second_parent_carer_name: "",
+        second_parent_carer_name_date: "",
+      },
+    });
+    setErrors({});
+    setError(null);
+    setSuccess(false);
+  };
+
   const value = {
     formData,
     updateFormData,
@@ -417,8 +611,10 @@ export const EnrolmentFormProvider = ({ children }) => {
     setErrors,
     validateField,
     validateForm,
+    validateSection,
     clearError,
     getError,
+    resetForm,
     resetSuccess: () => setSuccess(false),
     resetError: () => setError(null),
   };

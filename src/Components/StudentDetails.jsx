@@ -3,9 +3,8 @@ import TextInput from "./Inputs/TextInput.jsx";
 import RadioGroup from "./Inputs/RadioGroup.jsx";
 import { useEnrolmentForm } from "../Context/EnrolmentFormContext";
 
-export default function StudentDetails() {
-  const { formData, updateFormData, validateField, getError } =
-    useEnrolmentForm();
+export default function StudentDetails({ onNext }) {
+  const { formData, updateFormData, validateField, getError, validateSection } = useEnrolmentForm();
 
   const handleInputChange = (section, field, value) => {
     updateFormData(section, field, value);
@@ -14,6 +13,15 @@ export default function StudentDetails() {
   const handleBlur = (section, field) => {
     const value = formData[section][field];
     validateField(section, field, value);
+  };
+
+  const handleNext = () => {
+    // Validate the entire student section
+    const isValid = validateSection('student');
+    
+    if (isValid && onNext) {
+      onNext();
+    }
   };
 
   return (
@@ -25,9 +33,7 @@ export default function StudentDetails() {
           id="studentFamilyName"
           label="Family name"
           value={formData.student.family_name}
-          onChange={(value) =>
-            handleInputChange("student", "family_name", value)
-          }
+          onChange={(value) => handleInputChange("student", "family_name", value)}
           onBlur={() => handleBlur("student", "family_name")}
           error={getError("student", "family_name")}
           required
@@ -36,9 +42,7 @@ export default function StudentDetails() {
           id="studentFirstName"
           label="First given name"
           value={formData.student.first_given_name}
-          onChange={(value) =>
-            handleInputChange("student", "first_given_name", value)
-          }
+          onChange={(value) => handleInputChange("student", "first_given_name", value)}
           onBlur={() => handleBlur("student", "first_given_name")}
           error={getError("student", "first_given_name")}
           required
@@ -47,21 +51,19 @@ export default function StudentDetails() {
           id="studentSecondName"
           label="Second given name"
           value={formData.student.second_given_name}
-          onChange={(value) =>
-            handleInputChange("student", "second_given_name", value)
-          }
+          onChange={(value) => handleInputChange("student", "second_given_name", value)}
           onBlur={() => handleBlur("student", "second_given_name")}
           error={getError("student", "second_given_name")}
+          required
         />
         <TextInput
           id="studentPreferredName"
           label="Preferred first name"
           value={formData.student.preferred_first_name}
-          onChange={(value) =>
-            handleInputChange("student", "preferred_first_name", value)
-          }
+          onChange={(value) => handleInputChange("student", "preferred_first_name", value)}
           onBlur={() => handleBlur("student", "preferred_first_name")}
           error={getError("student", "preferred_first_name")}
+          required
         />
       </div>
 
@@ -72,9 +74,7 @@ export default function StudentDetails() {
             label="Date of birth"
             type="date"
             value={formData.student.date_of_birth}
-            onChange={(value) =>
-              handleInputChange("student", "date_of_birth", value)
-            }
+            onChange={(value) => handleInputChange("student", "date_of_birth", value)}
             onBlur={() => handleBlur("student", "date_of_birth")}
             error={getError("student", "date_of_birth")}
             required
@@ -105,9 +105,7 @@ export default function StudentDetails() {
             note="(K-12)"
             placeholder="e.g., 7"
             value={formData.student.enrollment_year}
-            onChange={(value) =>
-              handleInputChange("student", "enrollment_year", value)
-            }
+            onChange={(value) => handleInputChange("student", "enrollment_year", value)}
             onBlur={() => handleBlur("student", "enrollment_year")}
             error={getError("student", "enrollment_year")}
             required
@@ -124,9 +122,7 @@ export default function StudentDetails() {
                 ? "yes"
                 : "no"
             }
-            onChange={(value) =>
-              handleInputChange("student", "overseas_student", value === "yes")
-            }
+            onChange={(value) => handleInputChange("student", "overseas_student", value === "yes")}
             onBlur={() => handleBlur("student", "overseas_student")}
             options={[
               { value: "yes", label: "Yes" },
@@ -144,9 +140,7 @@ export default function StudentDetails() {
             id="communitySchoolName"
             label="Community language school name"
             value={formData.student.community_school_name}
-            onChange={(value) =>
-              handleInputChange("student", "community_school_name", value)
-            }
+            onChange={(value) => handleInputChange("student", "community_school_name", value)}
             onBlur={() => handleBlur("student", "community_school_name")}
             error={getError("student", "community_school_name")}
             required
@@ -158,9 +152,7 @@ export default function StudentDetails() {
             label="Location of day school"
             note="(suburb/town)"
             value={formData.student.day_school_location}
-            onChange={(value) =>
-              handleInputChange("student", "day_school_location", value)
-            }
+            onChange={(value) => handleInputChange("student", "day_school_location", value)}
             onBlur={() => handleBlur("student", "day_school_location")}
             error={getError("student", "day_school_location")}
             required
@@ -172,9 +164,7 @@ export default function StudentDetails() {
             label="Date of enrolment at this school"
             type="date"
             value={formData.student.enrolment_date}
-            onChange={(value) =>
-              handleInputChange("student", "enrolment_date", value)
-            }
+            onChange={(value) => handleInputChange("student", "enrolment_date", value)}
             onBlur={() => handleBlur("student", "enrolment_date")}
             error={getError("student", "enrolment_date")}
             required
@@ -196,11 +186,10 @@ export default function StudentDetails() {
             id="daySchoolName"
             label="Name of day school attended"
             value={formData.student.day_school_name}
-            onChange={(value) =>
-              handleInputChange("student", "day_school_name", value)
-            }
+            onChange={(value) => handleInputChange("student", "day_school_name", value)}
             onBlur={() => handleBlur("student", "day_school_name")}
             error={getError("student", "day_school_name")}
+            required
           />
         </div>
         <div className="col-md-12">
@@ -209,11 +198,10 @@ export default function StudentDetails() {
             label="Location of day school"
             note="(suburb/town)"
             value={formData.student.day_school_location_optional}
-            onChange={(value) =>
-              handleInputChange("student", "day_school_location_optional", value)
-            }
+            onChange={(value) => handleInputChange("student", "day_school_location_optional", value)}
             onBlur={() => handleBlur("student", "day_school_location_optional")}
             error={getError("student", "day_school_location_optional")}
+            required
           />
         </div>
       </div>
@@ -227,11 +215,10 @@ export default function StudentDetails() {
             type="month"
             help="Select month and year"
             value={formData.student.attendance_from}
-            onChange={(value) =>
-              handleInputChange("student", "attendance_from", value)
-            }
+            onChange={(value) => handleInputChange("student", "attendance_from", value)}
             onBlur={() => handleBlur("student", "attendance_from")}
             error={getError("student", "attendance_from")}
+            required
           />
         </div>
         <div className="col-md-6">
@@ -242,12 +229,26 @@ export default function StudentDetails() {
             type="month"
             help="Select month and year"
             value={formData.student.attendance_to}
-            onChange={(value) =>
-              handleInputChange("student", "attendance_to", value)
-            }
+            onChange={(value) => handleInputChange("student", "attendance_to", value)}
             onBlur={() => handleBlur("student", "attendance_to")}
             error={getError("student", "attendance_to")}
+            required
           />
+        </div>
+      </div>
+
+      {/* Next Button */}
+      <div className="container py-3 py-lg-5">
+        <div className="row">
+          <div className="col-12 d-flex justify-content-center align-items-center z-2">
+            <button
+              type="button"
+              onClick={handleNext}
+              className="btn globalbutton rounded-0 dark-text fw-bold fs-5 position-relative overflow-hidden"
+            >
+              Move to next step
+            </button>
+          </div>
         </div>
       </div>
     </section>

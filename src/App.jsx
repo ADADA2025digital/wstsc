@@ -15,7 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route 
-              path="/enrolment" // This matches the link in Home.js
+              path="/enrolment" 
               element={
                 <EnrolmentFormProvider>
                   <Enrolment />
