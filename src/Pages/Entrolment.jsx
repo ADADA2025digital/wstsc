@@ -7,6 +7,7 @@ import SectionHeader from "../Components/SectionHeader";
 import StudentDetails from "../Components/StudentDetails";
 import { useEnrolmentForm } from "../Context/EnrolmentFormContext";
 import Logo from "../assets/Images/logo.jpg";
+import Background from "../assets/Images/1.png";
 
 const Enrolment = () => {
   const { error, success } = useEnrolmentForm();
@@ -46,7 +47,14 @@ const Enrolment = () => {
     <>
       <div className="container-fluid py-5">
         {/* Form Header */}
-        <header className="banner-bg container p-5 d-flex align-items-center">
+        <header
+          className="banner-bg container p-5 d-flex align-items-center"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.85)), url(${Background})`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+          }}
+        >
           <div className="row">
             <div className="col-lg-12 d-flex flex-column align-items-start justify-content-end mt-3">
               <div className="d-flex gap-3 align-items-center">
