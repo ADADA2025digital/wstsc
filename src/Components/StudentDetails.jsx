@@ -2,9 +2,11 @@ import React from "react";
 import TextInput from "./Inputs/TextInput.jsx";
 import RadioGroup from "./Inputs/RadioGroup.jsx";
 import { useEnrolmentForm } from "../Context/EnrolmentFormContext";
+import SelectInput from "./Inputs/SelectInput.jsx";
 
 export default function StudentDetails({ onNext }) {
-  const { formData, updateFormData, validateField, getError, validateSection } = useEnrolmentForm();
+  const { formData, updateFormData, validateField, getError, validateSection } =
+    useEnrolmentForm();
 
   const handleInputChange = (section, field, value) => {
     updateFormData(section, field, value);
@@ -17,8 +19,8 @@ export default function StudentDetails({ onNext }) {
 
   const handleNext = () => {
     // Validate the entire student section
-    const isValid = validateSection('student');
-    
+    const isValid = validateSection("student");
+
     if (isValid && onNext) {
       onNext();
     }
@@ -29,42 +31,58 @@ export default function StudentDetails({ onNext }) {
       <h4 className="dark-text mb-3">A. Student details</h4>
 
       <div className="row">
-        <TextInput
-          id="studentFamilyName"
-          label="Family name"
-          value={formData.student.family_name}
-          onChange={(value) => handleInputChange("student", "family_name", value)}
-          onBlur={() => handleBlur("student", "family_name")}
-          error={getError("student", "family_name")}
-          required
-        />
-        <TextInput
-          id="studentFirstName"
-          label="First given name"
-          value={formData.student.first_given_name}
-          onChange={(value) => handleInputChange("student", "first_given_name", value)}
-          onBlur={() => handleBlur("student", "first_given_name")}
-          error={getError("student", "first_given_name")}
-          required
-        />
-        <TextInput
-          id="studentSecondName"
-          label="Second given name"
-          value={formData.student.second_given_name}
-          onChange={(value) => handleInputChange("student", "second_given_name", value)}
-          onBlur={() => handleBlur("student", "second_given_name")}
-          error={getError("student", "second_given_name")}
-          required
-        />
-        <TextInput
-          id="studentPreferredName"
-          label="Preferred first name"
-          value={formData.student.preferred_first_name}
-          onChange={(value) => handleInputChange("student", "preferred_first_name", value)}
-          onBlur={() => handleBlur("student", "preferred_first_name")}
-          error={getError("student", "preferred_first_name")}
-          required
-        />
+        <div className="col-md-3">
+          <TextInput
+            id="studentFamilyName"
+            label="Family name"
+            value={formData.student.family_name}
+            onChange={(value) =>
+              handleInputChange("student", "family_name", value)
+            }
+            onBlur={() => handleBlur("student", "family_name")}
+            error={getError("student", "family_name")}
+            required
+          />
+        </div>
+        <div className="col-md-3">
+          <TextInput
+            id="studentFirstName"
+            label="First given name"
+            value={formData.student.first_given_name}
+            onChange={(value) =>
+              handleInputChange("student", "first_given_name", value)
+            }
+            onBlur={() => handleBlur("student", "first_given_name")}
+            error={getError("student", "first_given_name")}
+            required
+          />
+        </div>
+        <div className="col-md-3">
+          <TextInput
+            id="studentSecondName"
+            label="Second given name"
+            value={formData.student.second_given_name}
+            onChange={(value) =>
+              handleInputChange("student", "second_given_name", value)
+            }
+            onBlur={() => handleBlur("student", "second_given_name")}
+            error={getError("student", "second_given_name")}
+            required
+          />
+        </div>
+        <div className="col-md-3">
+          <TextInput
+            id="studentPreferredName"
+            label="Preferred first name"
+            value={formData.student.preferred_first_name}
+            onChange={(value) =>
+              handleInputChange("student", "preferred_first_name", value)
+            }
+            onBlur={() => handleBlur("student", "preferred_first_name")}
+            error={getError("student", "preferred_first_name")}
+            required
+          />
+        </div>
       </div>
 
       <div className="row align-items-end">
@@ -74,7 +92,9 @@ export default function StudentDetails({ onNext }) {
             label="Date of birth"
             type="date"
             value={formData.student.date_of_birth}
-            onChange={(value) => handleInputChange("student", "date_of_birth", value)}
+            onChange={(value) =>
+              handleInputChange("student", "date_of_birth", value)
+            }
             onBlur={() => handleBlur("student", "date_of_birth")}
             error={getError("student", "date_of_birth")}
             required
@@ -99,16 +119,32 @@ export default function StudentDetails({ onNext }) {
 
       <div className="row align-items-end">
         <div className="col-md-6">
-          <TextInput
+          <SelectInput
             id="daySchoolYear"
             label="Year enrolled in day school"
             note="(K-12)"
-            placeholder="e.g., 7"
+            placeholder="Select grade level"
             value={formData.student.enrollment_year}
-            onChange={(value) => handleInputChange("student", "enrollment_year", value)}
+            onChange={(value) =>
+              handleInputChange("student", "enrollment_year", value)
+            }
             onBlur={() => handleBlur("student", "enrollment_year")}
             error={getError("student", "enrollment_year")}
             required
+            options={[
+              { value: "K1", label: "K1" },
+              { value: "K2", label: "K2" },
+              { value: "K3", label: "K3" },
+              { value: "K3", label: "K3" },
+              { value: "K5", label: "K5" },
+              { value: "K6", label: "K6" },
+              { value: "K7", label: "K7" },
+              { value: "K8", label: "K8" },
+              { value: "K9", label: "K9" },
+              { value: "K10", label: "K10" },
+              { value: "K11", label: "K11" },
+              { value: "K12", label: "K12" },
+            ]}
           />
         </div>
         <div className="col-md-4">
@@ -122,7 +158,9 @@ export default function StudentDetails({ onNext }) {
                 ? "yes"
                 : "no"
             }
-            onChange={(value) => handleInputChange("student", "overseas_student", value === "yes")}
+            onChange={(value) =>
+              handleInputChange("student", "overseas_student", value === "yes")
+            }
             onBlur={() => handleBlur("student", "overseas_student")}
             options={[
               { value: "yes", label: "Yes" },
@@ -135,36 +173,42 @@ export default function StudentDetails({ onNext }) {
       </div>
 
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-4">
           <TextInput
             id="communitySchoolName"
             label="Community language school name"
             value={formData.student.community_school_name}
-            onChange={(value) => handleInputChange("student", "community_school_name", value)}
+            onChange={(value) =>
+              handleInputChange("student", "community_school_name", value)
+            }
             onBlur={() => handleBlur("student", "community_school_name")}
             error={getError("student", "community_school_name")}
             required
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <TextInput
             id="daySchoolLocation"
             label="Location of day school"
             note="(suburb/town)"
             value={formData.student.day_school_location}
-            onChange={(value) => handleInputChange("student", "day_school_location", value)}
+            onChange={(value) =>
+              handleInputChange("student", "day_school_location", value)
+            }
             onBlur={() => handleBlur("student", "day_school_location")}
             error={getError("student", "day_school_location")}
             required
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <TextInput
             id="enrolmentDate"
             label="Date of enrolment at this school"
             type="date"
             value={formData.student.enrolment_date}
-            onChange={(value) => handleInputChange("student", "enrolment_date", value)}
+            onChange={(value) =>
+              handleInputChange("student", "enrolment_date", value)
+            }
             onBlur={() => handleBlur("student", "enrolment_date")}
             error={getError("student", "enrolment_date")}
             required
@@ -181,24 +225,32 @@ export default function StudentDetails({ onNext }) {
       </p>
 
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-6">
           <TextInput
             id="daySchoolName"
             label="Name of day school attended"
             value={formData.student.day_school_name}
-            onChange={(value) => handleInputChange("student", "day_school_name", value)}
+            onChange={(value) =>
+              handleInputChange("student", "day_school_name", value)
+            }
             onBlur={() => handleBlur("student", "day_school_name")}
             error={getError("student", "day_school_name")}
             required
           />
         </div>
-        <div className="col-md-12">
+        <div className="col-md-6">
           <TextInput
             id="daySchoolLocationOptional"
             label="Location of day school"
             note="(suburb/town)"
             value={formData.student.day_school_location_optional}
-            onChange={(value) => handleInputChange("student", "day_school_location_optional", value)}
+            onChange={(value) =>
+              handleInputChange(
+                "student",
+                "day_school_location_optional",
+                value
+              )
+            }
             onBlur={() => handleBlur("student", "day_school_location_optional")}
             error={getError("student", "day_school_location_optional")}
             required
@@ -215,7 +267,9 @@ export default function StudentDetails({ onNext }) {
             type="month"
             help="Select month and year"
             value={formData.student.attendance_from}
-            onChange={(value) => handleInputChange("student", "attendance_from", value)}
+            onChange={(value) =>
+              handleInputChange("student", "attendance_from", value)
+            }
             onBlur={() => handleBlur("student", "attendance_from")}
             error={getError("student", "attendance_from")}
             required
@@ -229,7 +283,9 @@ export default function StudentDetails({ onNext }) {
             type="month"
             help="Select month and year"
             value={formData.student.attendance_to}
-            onChange={(value) => handleInputChange("student", "attendance_to", value)}
+            onChange={(value) =>
+              handleInputChange("student", "attendance_to", value)
+            }
             onBlur={() => handleBlur("student", "attendance_to")}
             error={getError("student", "attendance_to")}
             required

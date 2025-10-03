@@ -108,35 +108,37 @@ export default function FamilyDetailsPhase2({ onNext }) {
       {/* New Section: Correspondence Address */}
       <div className="row mt-4">
         <h2 className="h4 mb-3">Correspondence Address</h2>
-
-        {/* Preferred email address for correspondence */}
-        <TextInput
-          id="preferredEmail"
-          label="Preferred email address for correspondence"
-          value={formData.correspondence?.preferred_email || ""}
-          onChange={(value) =>
-            handleInputChange("correspondence", "preferred_email", value)
-          }
-          onBlur={() => handleBlur("correspondence", "preferred_email")}
-          error={getError("correspondence", "preferred_email")}
-        />
-
-        {/* Residential address */}
-        <TextInput
-          id="residentialAddress"
-          label="Residential address (eg 1 High Street, Sydney, NSW, 2000)"
-          value={formData.correspondence?.residential_address || ""}
-          onChange={(value) =>
-            handleInputChange("correspondence", "residential_address", value)
-          }
-          onBlur={() => handleBlur("correspondence", "residential_address")}
-          error={getError("correspondence", "residential_address")}
-          required
-        />
+        <div className="col-md-6">
+          {/* Preferred email address for correspondence */}
+          <TextInput
+            id="preferredEmail"
+            label="Preferred email address for correspondence"
+            value={formData.correspondence?.preferred_email || ""}
+            onChange={(value) =>
+              handleInputChange("correspondence", "preferred_email", value)
+            }
+            onBlur={() => handleBlur("correspondence", "preferred_email")}
+            error={getError("correspondence", "preferred_email")}
+          />
+        </div>
+        <div className="col-md-6">
+          {/* Residential address */}
+          <TextInput
+            id="residentialAddress"
+            label="Residential address (eg 1 High Street, Sydney, NSW, 2000)"
+            value={formData.correspondence?.residential_address || ""}
+            onChange={(value) =>
+              handleInputChange("correspondence", "residential_address", value)
+            }
+            onBlur={() => handleBlur("correspondence", "residential_address")}
+            error={getError("correspondence", "residential_address")}
+            required
+          />
+        </div>
 
         {/* Does the student sometimes reside at this address? */}
         <div className="row mt-3">
-          <div className="col-12">
+          <div className="col-md-6">
             <label className="form-label fw-bold">
               Does the student sometimes reside at this address?
             </label>
@@ -197,19 +199,26 @@ export default function FamilyDetailsPhase2({ onNext }) {
               </div>
             )}
           </div>
+          <div className="col-md-6">
+            {/* Correspondence address (if different from residential address) */}
+            <TextInput
+              id="correspondenceAddress"
+              label="Correspondence address (if different from residential address)"
+              value={formData.correspondence?.correspondence_address || ""}
+              onChange={(value) =>
+                handleInputChange(
+                  "correspondence",
+                  "correspondence_address",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("correspondence", "correspondence_address")
+              }
+              error={getError("correspondence", "correspondence_address")}
+            />
+          </div>
         </div>
-
-        {/* Correspondence address (if different from residential address) */}
-        <TextInput
-          id="correspondenceAddress"
-          label="Correspondence address (if different from residential address)"
-          value={formData.correspondence?.correspondence_address || ""}
-          onChange={(value) =>
-            handleInputChange("correspondence", "correspondence_address", value)
-          }
-          onBlur={() => handleBlur("correspondence", "correspondence_address")}
-          error={getError("correspondence", "correspondence_address")}
-        />
       </div>
 
       {/* Section E: Additional emergency contacts */}
@@ -228,197 +237,245 @@ export default function FamilyDetailsPhase2({ onNext }) {
         {/* First Emergency Contact */}
         <h6 className="fw-bold mt-3">CONTACT DETAILS (first preference)</h6>
         <div className="row">
-          <TextInput
-            id="firstEmergencyFamilyName"
-            label="Family name"
-            value={formData.first_emergency_contact.family_name}
-            onChange={(value) =>
-              handleInputChange("first_emergency_contact", "family_name", value)
-            }
-            onBlur={() => handleBlur("first_emergency_contact", "family_name")}
-            error={getError("first_emergency_contact", "family_name")}
-            required
-          />
-
-          <TextInput
-            id="firstEmergencyGivenName"
-            label="Given name"
-            value={formData.first_emergency_contact.given_name}
-            onChange={(value) =>
-              handleInputChange("first_emergency_contact", "given_name", value)
-            }
-            onBlur={() => handleBlur("first_emergency_contact", "given_name")}
-            error={getError("first_emergency_contact", "given_name")}
-            required
-          />
-
-          <TextInput
-            id="firstEmergencyRelationship"
-            label="Relationship to student"
-            value={formData.first_emergency_contact.relationship_to_student}
-            onChange={(value) =>
-              handleInputChange(
+          <div className="col-md-4">
+            <TextInput
+              id="firstEmergencyFamilyName"
+              label="Family name"
+              value={formData.first_emergency_contact.family_name}
+              onChange={(value) =>
+                handleInputChange(
+                  "first_emergency_contact",
+                  "family_name",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("first_emergency_contact", "family_name")
+              }
+              error={getError("first_emergency_contact", "family_name")}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="firstEmergencyGivenName"
+              label="Given name"
+              value={formData.first_emergency_contact.given_name}
+              onChange={(value) =>
+                handleInputChange(
+                  "first_emergency_contact",
+                  "given_name",
+                  value
+                )
+              }
+              onBlur={() => handleBlur("first_emergency_contact", "given_name")}
+              error={getError("first_emergency_contact", "given_name")}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="firstEmergencyRelationship"
+              label="Relationship to student"
+              value={formData.first_emergency_contact.relationship_to_student}
+              onChange={(value) =>
+                handleInputChange(
+                  "first_emergency_contact",
+                  "relationship_to_student",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("first_emergency_contact", "relationship_to_student")
+              }
+              error={getError(
                 "first_emergency_contact",
-                "relationship_to_student",
-                value
-              )
-            }
-            onBlur={() =>
-              handleBlur("first_emergency_contact", "relationship_to_student")
-            }
-            error={getError(
-              "first_emergency_contact",
-              "relationship_to_student"
-            )}
-            required
-          />
-                    <p className="small">
-            <i>
-              If there are any special conditions or times relevant to any
-              contact number, please include these in the comment box next to
-              the number (eg Mondays and Tuesdays only).
-            </i>
-          </p>
-
-          <TextInput
-            id="firstEmergencyMobile"
-            label="Phone number"
-            note="(mobile)"
-            value={formData.first_emergency_contact.mobile_phone}
-            onChange={(value) =>
-              handleInputChange(
-                "first_emergency_contact",
-                "mobile_phone",
-                value
-              )
-            }
-            onBlur={() => handleBlur("first_emergency_contact", "mobile_phone")}
-            error={getError("first_emergency_contact", "mobile_phone")}
-            required
-          />
-
-          <TextInput
-            id="firstEmergencyHome"
-            label="Phone number"
-            note="(home)"
-            value={formData.first_emergency_contact.home_phone}
-            onChange={(value) =>
-              handleInputChange("first_emergency_contact", "home_phone", value)
-            }
-            onBlur={() => handleBlur("first_emergency_contact", "home_phone")}
-            error={getError("first_emergency_contact", "home_phone")}
-          />
-
-          <TextInput
-            id="firstEmergencyWork"
-            label="Phone number"
-            note="(work)"
-            value={formData.first_emergency_contact.work_phone}
-            onChange={(value) =>
-              handleInputChange("first_emergency_contact", "work_phone", value)
-            }
-            onBlur={() => handleBlur("first_emergency_contact", "work_phone")}
-            error={getError("first_emergency_contact", "work_phone")}
-          />
+                "relationship_to_student"
+              )}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="firstEmergencyMobile"
+              label="Phone number"
+              note="(mobile)"
+              value={formData.first_emergency_contact.mobile_phone}
+              onChange={(value) =>
+                handleInputChange(
+                  "first_emergency_contact",
+                  "mobile_phone",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("first_emergency_contact", "mobile_phone")
+              }
+              error={getError("first_emergency_contact", "mobile_phone")}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="firstEmergencyHome"
+              label="Phone number"
+              note="(home)"
+              value={formData.first_emergency_contact.home_phone}
+              onChange={(value) =>
+                handleInputChange(
+                  "first_emergency_contact",
+                  "home_phone",
+                  value
+                )
+              }
+              onBlur={() => handleBlur("first_emergency_contact", "home_phone")}
+              error={getError("first_emergency_contact", "home_phone")}
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="firstEmergencyWork"
+              label="Phone number"
+              note="(work)"
+              value={formData.first_emergency_contact.work_phone}
+              onChange={(value) =>
+                handleInputChange(
+                  "first_emergency_contact",
+                  "work_phone",
+                  value
+                )
+              }
+              onBlur={() => handleBlur("first_emergency_contact", "work_phone")}
+              error={getError("first_emergency_contact", "work_phone")}
+            />
+          </div>
         </div>
 
         {/* Second Emergency Contact */}
         <h6 className="fw-bold mt-3">CONTACT DETAILS (second preference)</h6>
         <div className="row">
-          <TextInput
-            id="secondEmergencyFamilyName"
-            label="Family name"
-            value={formData.second_emergency_contact.family_name}
-            onChange={(value) =>
-              handleInputChange(
+          <div className="col-md-4">
+            <TextInput
+              id="secondEmergencyFamilyName"
+              label="Family name"
+              value={formData.second_emergency_contact.family_name}
+              onChange={(value) =>
+                handleInputChange(
+                  "second_emergency_contact",
+                  "family_name",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("second_emergency_contact", "family_name")
+              }
+              error={getError("second_emergency_contact", "family_name")}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="secondEmergencyGivenName"
+              label="Given name"
+              value={formData.second_emergency_contact.given_name}
+              onChange={(value) =>
+                handleInputChange(
+                  "second_emergency_contact",
+                  "given_name",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("second_emergency_contact", "given_name")
+              }
+              error={getError("second_emergency_contact", "given_name")}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="secondEmergencyRelationship"
+              label="Relationship to student"
+              value={formData.second_emergency_contact.relationship_to_student}
+              onChange={(value) =>
+                handleInputChange(
+                  "second_emergency_contact",
+                  "relationship_to_student",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur(
+                  "second_emergency_contact",
+                  "relationship_to_student"
+                )
+              }
+              error={getError(
                 "second_emergency_contact",
-                "family_name",
-                value
-              )
-            }
-            onBlur={() => handleBlur("second_emergency_contact", "family_name")}
-            error={getError("second_emergency_contact", "family_name")}
-            required
-          />
+                "relationship_to_student"
+              )}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="secondEmergencyMobile"
+              label="Phone number"
+              note="(mobile)"
+              value={formData.second_emergency_contact.mobile_phone}
+              onChange={(value) =>
+                handleInputChange(
+                  "second_emergency_contact",
+                  "mobile_phone",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("second_emergency_contact", "mobile_phone")
+              }
+              error={getError("second_emergency_contact", "mobile_phone")}
+              required
+            />
+          </div>
 
-          <TextInput
-            id="secondEmergencyGivenName"
-            label="Given name"
-            value={formData.second_emergency_contact.given_name}
-            onChange={(value) =>
-              handleInputChange("second_emergency_contact", "given_name", value)
-            }
-            onBlur={() => handleBlur("second_emergency_contact", "given_name")}
-            error={getError("second_emergency_contact", "given_name")}
-            required
-          />
-
-          <TextInput
-            id="secondEmergencyRelationship"
-            label="Relationship to student"
-            value={formData.second_emergency_contact.relationship_to_student}
-            onChange={(value) =>
-              handleInputChange(
-                "second_emergency_contact",
-                "relationship_to_student",
-                value
-              )
-            }
-            onBlur={() =>
-              handleBlur("second_emergency_contact", "relationship_to_student")
-            }
-            error={getError(
-              "second_emergency_contact",
-              "relationship_to_student"
-            )}
-            required
-          />
-
-          <p className="small"><i>If there are any special conditions or times relevant to any contact number, please include these in the comment box next to the number
-(eg Mondays and Tuesdays only).</i></p>
-
-          <TextInput
-            id="secondEmergencyMobile"
-            label="Phone number"
-            note="(mobile)"
-            value={formData.second_emergency_contact.mobile_phone}
-            onChange={(value) =>
-              handleInputChange(
-                "second_emergency_contact",
-                "mobile_phone",
-                value
-              )
-            }
-            onBlur={() =>
-              handleBlur("second_emergency_contact", "mobile_phone")
-            }
-            error={getError("second_emergency_contact", "mobile_phone")}
-            required
-          />
-
-          <TextInput
-            id="secondEmergencyHome"
-            label="Phone number"
-            note="(home)"
-            value={formData.second_emergency_contact.home_phone}
-            onChange={(value) =>
-              handleInputChange("second_emergency_contact", "home_phone", value)
-            }
-            onBlur={() => handleBlur("second_emergency_contact", "home_phone")}
-            error={getError("second_emergency_contact", "home_phone")}
-          />
-
-          <TextInput
-            id="secondEmergencyWork"
-            label="Phone number"
-            note="(work)"
-            value={formData.second_emergency_contact.work_phone}
-            onChange={(value) =>
-              handleInputChange("second_emergency_contact", "work_phone", value)
-            }
-            onBlur={() => handleBlur("second_emergency_contact", "work_phone")}
-            error={getError("second_emergency_contact", "work_phone")}
-          />
+          <div className="col-md-4">
+            <TextInput
+              id="secondEmergencyHome"
+              label="Phone number"
+              note="(home)"
+              value={formData.second_emergency_contact.home_phone}
+              onChange={(value) =>
+                handleInputChange(
+                  "second_emergency_contact",
+                  "home_phone",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("second_emergency_contact", "home_phone")
+              }
+              error={getError("second_emergency_contact", "home_phone")}
+            />
+          </div>
+          <div className="col-md-4">
+            <TextInput
+              id="secondEmergencyWork"
+              label="Phone number"
+              note="(work)"
+              value={formData.second_emergency_contact.work_phone}
+              onChange={(value) =>
+                handleInputChange(
+                  "second_emergency_contact",
+                  "work_phone",
+                  value
+                )
+              }
+              onBlur={() =>
+                handleBlur("second_emergency_contact", "work_phone")
+              }
+              error={getError("second_emergency_contact", "work_phone")}
+            />
+          </div>
         </div>
       </div>
 

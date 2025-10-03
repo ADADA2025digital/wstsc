@@ -23,13 +23,19 @@ export default function PersonalInfoAndDeclaration() {
 
   const handleInputChange = (section, field, value) => {
     // Validate that names don't contain numbers or symbols - ONLY for actual name fields
-    if ((field === 'first_parent_carer_name' || field === 'second_parent_carer_name') && value) {
-      const hasInvalidChars = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+    if (
+      (field === "first_parent_carer_name" ||
+        field === "second_parent_carer_name") &&
+      value
+    ) {
+      const hasInvalidChars = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+        value
+      );
       if (hasInvalidChars) {
         return; // Don't update if invalid characters are present
       }
     }
-   
+
     updateFormData(section, field, value);
     if (sectionError) {
       setSectionError("");
@@ -40,25 +46,29 @@ export default function PersonalInfoAndDeclaration() {
     const value = formData[section][field];
     validateField(section, field, value);
     // Mark field as touched
-    setTouchedFields(prev => ({
+    setTouchedFields((prev) => ({
       ...prev,
-      [`${section}.${field}`]: true
+      [`${section}.${field}`]: true,
     }));
   };
 
   // Show success alert and redirect when form is successfully submitted
   useEffect(() => {
     if (success) {
-      Swal.fire({
+      const alert = Swal.fire({
         title: "Success!",
         text: "Form submitted successfully!",
         icon: "success",
         confirmButtonText: "OK",
         confirmButtonColor: "#3085d6",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/");
-        }
+        timer: 3000, // Auto close after 3000ms
+        timerProgressBar: true, // Show progress bar
+        showConfirmButton: false, // Hide the confirm button for auto-close
+      });
+
+      // Navigate when the alert is closed (either by timer or manually)
+      alert.then((result) => {
+        navigate("/");
       });
     }
   }, [success, navigate]);
@@ -90,15 +100,19 @@ export default function PersonalInfoAndDeclaration() {
     // DEBUG: Log current form data state
     console.log("=== FORM SUBMISSION DEBUG ===");
     console.log("Full formData:", formData);
-   
+
     // ONLY validate the personal declaration section
     const isPersonalDeclarationValid = validateSection("personal_declaration");
 
     // Check required fields for personal declaration
-    const requiredFields = ['first_parent_carer_name', 'first_parent_carer_name_date'];
-    const missingFields = requiredFields.filter(field =>
-      !formData.personal_declaration[field] ||
-      formData.personal_declaration[field].toString().trim() === ''
+    const requiredFields = [
+      "first_parent_carer_name",
+      "first_parent_carer_name_date",
+    ];
+    const missingFields = requiredFields.filter(
+      (field) =>
+        !formData.personal_declaration[field] ||
+        formData.personal_declaration[field].toString().trim() === ""
     );
 
     // DEBUG: Log personal declaration validation
@@ -118,9 +132,9 @@ export default function PersonalInfoAndDeclaration() {
         console.error("=== SUBMISSION ERROR ===", err);
         console.error("Error details:", err.message);
         console.error("Error stack:", err.stack);
-       
+
         // Check if it's a validation error
-        if (err.message === 'Form validation failed') {
+        if (err.message === "Form validation failed") {
           Swal.fire({
             title: "Incomplete Form",
             text: "There are some validation errors. Please check all sections and try again.",
@@ -139,10 +153,11 @@ export default function PersonalInfoAndDeclaration() {
         }
       }
     } else {
-      const errorMessage = "Please complete all required fields in the personal declaration before submitting the form.";
-     
+      const errorMessage =
+        "Please complete all required fields in the personal declaration before submitting the form.";
+
       setSectionError(errorMessage);
-     
+
       console.log("=== VALIDATION FAILED ===");
       console.log("Section error set to:", errorMessage);
       console.log("Personal declaration valid:", isPersonalDeclarationValid);
@@ -150,9 +165,9 @@ export default function PersonalInfoAndDeclaration() {
 
       // Scroll to error message
       setTimeout(() => {
-        const errorElement = document.querySelector('.alert-danger');
+        const errorElement = document.querySelector(".alert-danger");
         if (errorElement) {
-          errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
           console.log("Scrolled to error element");
         } else {
           console.log("Error element not found for scrolling");
@@ -164,19 +179,6 @@ export default function PersonalInfoAndDeclaration() {
   return (
     <section className="container bg-light p-3">
       <div className="row">
-        {/* Section Error Message */}
-        {sectionError && (
-          <div className="alert alert-danger" role="alert">
-            {sectionError}
-            {/* DEBUG: Show additional info in development */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className="mt-2 small">
-                <strong>Debug Info:</strong> Check browser console (F12) for detailed validation information.
-              </div>
-            )}
-          </div>
-        )}
-       
         <div className="col-md-6">
           <p className="text-muted">
             The personal information collected on this information form is for
@@ -241,11 +243,24 @@ export default function PersonalInfoAndDeclaration() {
                     value
                   )
                 }
-                onBlur={() => handleBlur("personal_declaration", "first_parent_carer_name")}
-                error={shouldShowError("personal_declaration", "first_parent_carer_name") ?
-                  (getError("personal_declaration", "first_parent_carer_name") ||
-                   validateName(formData.personal_declaration.first_parent_carer_name, true))
-                  : null}
+                onBlur={() =>
+                  handleBlur("personal_declaration", "first_parent_carer_name")
+                }
+                error={
+                  shouldShowError(
+                    "personal_declaration",
+                    "first_parent_carer_name"
+                  )
+                    ? getError(
+                        "personal_declaration",
+                        "first_parent_carer_name"
+                      ) ||
+                      validateName(
+                        formData.personal_declaration.first_parent_carer_name,
+                        true
+                      )
+                    : null
+                }
                 required
               />
               <p className="small">
@@ -261,7 +276,8 @@ export default function PersonalInfoAndDeclaration() {
                 label="Date"
                 type="date"
                 value={
-                  formData.personal_declaration.first_parent_carer_name_date || ""
+                  formData.personal_declaration.first_parent_carer_name_date ||
+                  ""
                 }
                 onChange={(value) =>
                   handleInputChange(
@@ -270,11 +286,28 @@ export default function PersonalInfoAndDeclaration() {
                     value
                   )
                 }
-                onBlur={() => handleBlur("personal_declaration", "first_parent_carer_name_date")}
-                error={shouldShowError("personal_declaration", "first_parent_carer_name_date") ?
-                  (getError("personal_declaration", "first_parent_carer_name_date") ||
-                   validateDate(formData.personal_declaration.first_parent_carer_name_date, true))
-                  : null}
+                onBlur={() =>
+                  handleBlur(
+                    "personal_declaration",
+                    "first_parent_carer_name_date"
+                  )
+                }
+                error={
+                  shouldShowError(
+                    "personal_declaration",
+                    "first_parent_carer_name_date"
+                  )
+                    ? getError(
+                        "personal_declaration",
+                        "first_parent_carer_name_date"
+                      ) ||
+                      validateDate(
+                        formData.personal_declaration
+                          .first_parent_carer_name_date,
+                        true
+                      )
+                    : null
+                }
                 required
               />
             </div>
@@ -290,11 +323,24 @@ export default function PersonalInfoAndDeclaration() {
                     value
                   )
                 }
-                onBlur={() => handleBlur("personal_declaration", "second_parent_carer_name")}
-                error={shouldShowError("personal_declaration", "second_parent_carer_name") ?
-                  (getError("personal_declaration", "second_parent_carer_name") ||
-                   validateName(formData.personal_declaration.second_parent_carer_name, false))
-                  : null}
+                onBlur={() =>
+                  handleBlur("personal_declaration", "second_parent_carer_name")
+                }
+                error={
+                  shouldShowError(
+                    "personal_declaration",
+                    "second_parent_carer_name"
+                  )
+                    ? getError(
+                        "personal_declaration",
+                        "second_parent_carer_name"
+                      ) ||
+                      validateName(
+                        formData.personal_declaration.second_parent_carer_name,
+                        false
+                      )
+                    : null
+                }
               />
             </div>
             <div className="col-md-6">
@@ -303,7 +349,8 @@ export default function PersonalInfoAndDeclaration() {
                 label="Date"
                 type="date"
                 value={
-                  formData.personal_declaration.second_parent_carer_name_date || ""
+                  formData.personal_declaration.second_parent_carer_name_date ||
+                  ""
                 }
                 onChange={(value) =>
                   handleInputChange(
@@ -312,11 +359,28 @@ export default function PersonalInfoAndDeclaration() {
                     value
                   )
                 }
-                onBlur={() => handleBlur("personal_declaration", "second_parent_carer_name_date")}
-                error={shouldShowError("personal_declaration", "second_parent_carer_name_date") ?
-                  (getError("personal_declaration", "second_parent_carer_name_date") ||
-                   validateDate(formData.personal_declaration.second_parent_carer_name_date, false))
-                  : null}
+                onBlur={() =>
+                  handleBlur(
+                    "personal_declaration",
+                    "second_parent_carer_name_date"
+                  )
+                }
+                error={
+                  shouldShowError(
+                    "personal_declaration",
+                    "second_parent_carer_name_date"
+                  )
+                    ? getError(
+                        "personal_declaration",
+                        "second_parent_carer_name_date"
+                      ) ||
+                      validateDate(
+                        formData.personal_declaration
+                          .second_parent_carer_name_date,
+                        false
+                      )
+                    : null
+                }
               />
             </div>
           </div>
@@ -324,6 +388,18 @@ export default function PersonalInfoAndDeclaration() {
 
         {/* Submit Button */}
         <div className="container py-3 py-lg-5">
+          {/* Section Error Message */}
+          {sectionError && (
+            <div className="alert alert-danger" role="alert">
+              {sectionError}
+              {/* DEBUG: Show additional info in development */}
+              {/* {process.env.NODE_ENV === 'development' && (
+              <div className="mt-2 small">
+                <strong>Debug Info:</strong> Check browser console (F12) for detailed validation information.
+              </div>
+            )} */}
+            </div>
+          )}
           <div className="row">
             {/* Loading Message */}
             {loading && (
@@ -333,7 +409,7 @@ export default function PersonalInfoAndDeclaration() {
                 </div>
               </div>
             )}
-           
+
             <div className="col-12 d-flex justify-content-center align-items-center z-2">
               <button
                 type="button"

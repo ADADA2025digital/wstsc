@@ -9,9 +9,9 @@ const PageHeader = ({ breadcrumbs }) => {
           <img src={Logo} alt="" style={{ width: "80px", height: "80px" }} />{" "}
           <h4 className="text-white">Western Sydney Tamil Study Centre</h4>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6 text-end">
           <nav aria-label="breadcrumb">
-            <ol className="breadcrumb justify-content-start m-0">
+            <ol className="breadcrumb justify-content-end m-0">
               {breadcrumbs.map((breadcrumb, index) => (
                 <li
                   key={index}
