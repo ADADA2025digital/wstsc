@@ -4,7 +4,7 @@ import Logo from "../assets/Images/logo.jpg";
 const PageHeader = ({ breadcrumbs }) => {
   return (
     <div className="container banner-bg py-4">
-      <div class="row justify-content-between align-items-center g-2">
+      <div className="row justify-content-between align-items-center g-2">
         <div className="col-md-6 d-flex gap-3 align-items-center">
           <img src={Logo} alt="" style={{ width: "80px", height: "80px" }} />{" "}
           <h4 className="text-white">Western Sydney Tamil Study Centre</h4>

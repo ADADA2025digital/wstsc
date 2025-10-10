@@ -6,6 +6,7 @@ import "./assets/Styles/Style.css";
 import Home from "./Pages/Home";
 import { EnrolmentFormProvider } from "./Context/EnrolmentFormContext";
 import Enrolment from "./Pages/Entrolment";
+import EnrolmentPolicy from "./Pages/EnrolmentPolicy";
 
 function App() {
   return (
@@ -14,13 +15,17 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route 
-              path="/enrolment" 
+            <Route
+              path="/conditions-of-enrolment"
+              element={<EnrolmentPolicy />}
+            />
+            <Route
+              path="/enrolment"
               element={
                 <EnrolmentFormProvider>
                   <Enrolment />
                 </EnrolmentFormProvider>
-              } 
+              }
             />
           </Routes>
         </div>

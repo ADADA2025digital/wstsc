@@ -1,180 +1,235 @@
 import React from "react";
-import PageHeader from "../Components/PageHeader";
+import Background from "../assets/Images/bg.jpg";
+import Logo from "../assets/Images/logo.jpg";
 
 const Home = () => {
   return (
     <>
-      <div className="container-fluid py-5">
-        <PageHeader
-          breadcrumbs={[
-            { label: "Home", href: "/", icon: "bi-house-fill" },
-            { label: "Enrolment policy", active: true },
-          ]}
-        />
-        <div className="container pt-5">
-          <div className="row  d-flex justify-content-center">
-            <div className="col-md-12">
-              <h1 className="heading dark-text">School Terms and Conditions</h1>
+      <div className="container-fluid p-0">
+        <section
+          className="vh-100 position-relative d-flex justify-content-center align-items-center text-center text-light"
+          style={{
+            backgroundImage: `url(${Background})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <div className="overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
-              <h5 className="mt-3 text-decoration-underline">
-                Conditions of Enrolment for Western Sydney Tamil Study Centre
-              </h5>
-
-              <h6 className="fw-bold mt-4">
-                <i>
-                  Please read carefully prior to filling out the form online.
-                </i>
-              </h6>
-              <ol>
-                <li>
-                  <h6 className="fw-bold">GENERAL</h6>
-                  <p>
-                    The completion of this Application for Enrolment signifies
-                    your acceptance and agreement with the conditions relating
-                    to the payment of fees and charges and to any other
-                    condition or rule which may be implemented by the executive
-                    committee or its representatives to ensure the orderly
-                    conduct of the school.
-                  </p>
-                </li>
-
-                <li>
-                  <h6 className="fw-bold">CLASSROOM ALLOCATION</h6>
-                  <p>
-                    The new enrolment will be randomly allocated to a different
-                    division of the same class OR to the division with a low
-                    number of students if the class has more than one division.
-                    The class allocation will also depend on the student's
-                    fluency in the Tamil language.
-                  </p>
-                </li>
-
-                <li>
-                  <h6 className="fw-bold">ATTENDANCE AND ABSENCE</h6>
-                  <p>
-                    A student is expected to attend throughout the school year,
-                    which is divided into four terms. Absenteeism may affect the
-                    results or outcome of participation in competitions
-                    conducted by the school and cultural festivals of the school
-                    and other events organized by the school from time to time.
-                  </p>
-                </li>
-
-                <li>
-                  <h6 className="fw-bold">DISCIPLINE</h6>
-                  <p>
-                    Enrolment signifies agreement with the rules and regulations
-                    of the school (as published on the information booklet which
-                    is on the WSTSC website, common sense, and appropriate
-                    behaviour etc.) and intention to abide thereby.
-                  </p>
-                </li>
-              </ol>
-
-              <h6 className="fw-bold mt-3">APPLICATION and DECLARATION</h6>
-
-              <ul className="lh-lg">
-                <li>
-                  I/We apply to have my/our child admitted to the school as
-                  stated in the personal details.
-                </li>
-                <li>
-                  I/We certify that all personal details supplied with this
-                  application are true and correct.
-                </li>
-                <li>
-                  I/We acknowledge and accept the rules and regulations as set
-                  out in the Information Booklet
-                </li>
-                <li>
-                  I/We have read and understood the School's Duty of Care
-                  Policy.
-                </li>
-                <li>
-                  I/We give permission to use my child's details to apply for
-                  and monitor funding under the Community Language Program
-                  (CLP). It will be used by the Department of Education and
-                  Training (DET) to assess eligibility and monitor program
-                  implementation.
-                </li>
-                <li>
-                  I/We give permission to use my/our child's photo, video, and
-                  work in any school communication in print and/or electronic
-                  form, including but not limited to the annual school magazines
-                  and publications, the school's official Facebook page, and the
-                  school website.
-                </li>
-                <li>
-                  In the event of acceptance by the school, I/we agree to be
-                  responsible for the payment of all fees and charges and to be
-                  bound by the regulations that may from time to time be made
-                  for the smooth operation of the school and the Conditions of
-                  Enrolment as stated above.
-                </li>
-                <li>
-                  I/We understand that the school's primary mode of
-                  communication with me/us regarding my/our child is via email.
-                </li>
-              </ul>
-
-              <h6 className="fw-bold mt-3">MEDICAL DECLARATION GENERAL</h6>
-              <p>
-                In the event of illness or injury to my child while at the
-                school or on an excursion, or travelling to or from school, I
-                authorize the school senior staff member or a qualified first
-                aider, or a qualified medical practitioner, if/where it is
-                impossible to contact me for the consent of an emergency medical
-                treatment, to provide necessary treatment and/or call an
-                ambulance for further assistance if the condition of the child
-                becoming worse.
-              </p>
-
-              <h6 className="fw-bold mt-3">PRIVACY OF INFORMATION</h6>
-              <p>
-                The information requested in this form is required for the
-                purpose of the enrolment of a student by the school.
-                Western Sydney Tamil Study Centre Inc. has a policy that covers
-                the security, confidentiality, and privacy of information
-                obtained. <br /> <br />
-                The enrolment form looks plain, but it does the job. This form
-                will be improved continuously over the coming months.
-              </p>
-
-              <p className="mt-4">
-                If you accept these conditions, you can continue with the online
-                enrolment. You will be provided with 2 tokens to resume
-                enrolment at any time. Once you complete entering all necessary
-                information, you can submit the enrolment for WSTSC
-                administration to review and approve. Once submitted, kindly get
-                in touch with WSTSC administration team by attending in-person
-                at one of the campuses during operating hours or email for next
-                steps.
-              </p>
-
-              <p className="mt-4">
-                NB: You can pay school fees by{" "}
-                <strong>Creative Kids Voucher (CKV)</strong>, or cash at the
-                counter during school hours. Please send your Creative Kids
-                Voucher to info@wstsc.org.au if you want to pay by{" "}
-                <strong>CKV</strong>.
-              </p>
-
-              <p className="mt-4">Thank You</p>
-
-              <p className="fw-bold">WSTSC Administration.</p>
-            </div>
-            <div className="row border-top">
-              <div className="d-flex justify-content-center mt-4">
-                <a
-                  href="/enrolment"
-                  className="badge banner-bg text-white p-3 fs-6 rounded-0 text-decoration-none"
+          <div className="d-flex flex-column justify-content-center align-items-center position-relative z-1 py-5">
+            <div className="gear-wrapper">
+              <div className="ray"></div>
+              <span className="spark"></span>
+              <span className="spark"></span>
+              <span className="spark"></span>
+              <svg
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 1280.000000 1280.000000"
+                height="12880.000000pt"
+                width="1280.000000pt"
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.0"
+                className="gear g1"
+              >
+                <g
+                  stroke="none"
+                  fill="#fff"
+                  transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
                 >
-                  I Agree with the above Terms and Conditions
-                </a>
-              </div>
+                  <path
+                    d="M5664 11538 c-38 -40 -55 -68 -68 -113 -19 -65 -44 -149 -70 -235 -9
+-30 -74 -248 -145 -484 l-128 -429 -97 -33 c-176 -60 -334 -125 -503 -209
+l-168 -83 -100 53 c-55 29 -154 82 -220 117 -66 36 -147 80 -180 98 -232 125
+-441 239 -505 275 -41 22 -100 54 -131 70 l-57 29 -108 -101 c-60 -56 -315
+-308 -568 -561 l-458 -460 54 -98 c30 -55 77 -139 103 -189 26 -49 62 -115 78
+-145 17 -30 57 -103 89 -162 32 -60 86 -159 119 -220 34 -62 84 -156 112 -208
+27 -52 56 -104 63 -115 8 -11 14 -26 14 -35 0 -8 -31 -76 -69 -150 -90 -176
+-178 -385 -247 -587 -18 -50 -20 -52 -74 -68 -30 -10 -73 -23 -95 -30 -34 -11
+-101 -31 -140 -41 -5 -2 -41 -12 -80 -24 -38 -12 -77 -23 -85 -25 -8 -2 -46
+-13 -85 -25 -38 -12 -77 -23 -85 -25 -8 -2 -69 -20 -135 -40 -177 -53 -269
+-81 -370 -110 -82 -24 -95 -31 -147 -83 l-57 -57 -1 -712 c0 -688 0 -713 19
+-722 10 -6 56 -21 102 -35 46 -13 170 -50 274 -81 105 -31 197 -58 205 -60 8
+-2 47 -14 85 -25 111 -34 154 -47 245 -73 113 -33 287 -85 326 -98 27 -8 34
+-18 49 -67 79 -263 165 -482 275 -702 l68 -136 -52 -100 c-29 -54 -81 -151
+-116 -214 -34 -63 -79 -146 -100 -185 -21 -38 -65 -119 -97 -180 -97 -177
+-187 -344 -236 -436 l-46 -85 510 -510 509 -509 58 29 c31 17 91 49 132 71 82
+46 409 224 535 291 44 24 134 72 200 109 66 36 152 82 191 102 l71 36 179 -90
+c98 -50 240 -114 314 -143 74 -29 144 -56 155 -61 18 -7 175 -57 231 -74 14
+-3 25 -19 32 -43 18 -63 66 -228 112 -377 11 -38 23 -77 25 -85 3 -13 70 -240
+139 -470 13 -41 40 -132 61 -203 l38 -127 723 0 723 0 55 66 c31 36 56 68 57
+72 1 13 8 37 29 107 12 39 23 77 25 85 2 8 13 47 25 85 12 39 23 77 25 85 2 8
+13 44 24 80 11 36 63 211 116 390 53 179 100 332 105 340 4 8 48 28 97 44 156
+50 363 137 548 229 l180 90 55 -29 c30 -16 118 -63 195 -105 125 -68 203 -110
+445 -241 36 -20 119 -65 185 -100 66 -36 159 -86 206 -111 47 -26 92 -47 101
+-47 18 0 1118 1103 1118 1122 0 7 -12 33 -26 58 -14 25 -45 81 -69 125 -23 44
+-71 132 -105 195 -35 63 -138 255 -230 426 -93 170 -177 326 -189 345 -11 19
+-21 41 -21 50 0 9 27 69 60 133 53 104 109 230 156 351 9 22 19 47 23 55 4 8
+25 69 46 135 21 66 43 125 49 132 6 6 52 23 101 38 148 44 177 52 250 75 39
+11 77 23 85 25 8 2 47 13 85 25 39 12 77 23 85 25 8 2 47 13 85 25 39 12 77
+23 85 25 8 2 69 20 135 40 66 20 158 47 204 60 74 21 91 30 138 77 l53 52 0
+722 0 722 -62 21 c-59 19 -325 98 -358 106 -8 2 -46 14 -85 25 -105 32 -151
+46 -250 75 -49 15 -126 37 -170 50 -44 13 -118 35 -165 49 -47 13 -114 33
+-150 45 l-65 20 -34 103 c-67 211 -195 507 -293 684 l-45 80 80 145 c43 79 99
+182 124 229 57 106 223 413 360 665 24 44 51 95 60 113 l17 33 -499 499 c-275
+275 -507 500 -515 500 -9 0 -24 -6 -35 -13 -11 -8 -58 -34 -105 -59 -90 -48
+-253 -136 -447 -242 -65 -35 -145 -78 -178 -96 -92 -49 -169 -91 -302 -164
+l-121 -66 -159 79 c-192 96 -331 153 -523 216 -80 26 -154 51 -166 55 -15 6
+-26 29 -43 86 -33 117 -60 207 -161 544 -51 168 -102 341 -115 385 -13 44 -33
+112 -45 150 -12 39 -23 78 -25 88 -2 9 -7 22 -10 27 -4 7 -260 10 -729 10
+l-723 0 -49 -52z m981 -3342 c83 -16 89 -17 166 -35 248 -57 582 -231 789
+-413 344 -302 557 -671 644 -1118 23 -119 27 -176 27 -362 0 -163 -9 -263 -30
+-361 -6 -23 -13 -58 -16 -77 -13 -77 -89 -282 -150 -405 -178 -362 -407 -601
+-735 -767 -355 -180 -750 -252 -1120 -203 -63 8 -126 17 -140 20 -14 3 -47 10
+-75 16 -91 18 -310 97 -423 154 -560 280 -966 827 -1058 1425 -30 198 -30 501
+1 650 3 14 8 41 11 60 31 174 128 426 228 593 120 200 230 324 406 456 216
+163 515 302 745 346 73 14 203 35 240 39 83 9 412 -4 490 -18z"
+                  ></path>
+                </g>
+              </svg>
+              <svg
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 1280.000000 1280.000000"
+                height="1280.000000pt"
+                width="1280.000000pt"
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.0"
+                className="gear g2"
+              >
+                <g
+                  stroke="none"
+                  fill="#fff"
+                  transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                >
+                  <path
+                    d="M5664 11538 c-38 -40 -55 -68 -68 -113 -19 -65 -44 -149 -70 -235 -9
+-30 -74 -248 -145 -484 l-128 -429 -97 -33 c-176 -60 -334 -125 -503 -209
+l-168 -83 -100 53 c-55 29 -154 82 -220 117 -66 36 -147 80 -180 98 -232 125
+-441 239 -505 275 -41 22 -100 54 -131 70 l-57 29 -108 -101 c-60 -56 -315
+-308 -568 -561 l-458 -460 54 -98 c30 -55 77 -139 103 -189 26 -49 62 -115 78
+-145 17 -30 57 -103 89 -162 32 -60 86 -159 119 -220 34 -62 84 -156 112 -208
+27 -52 56 -104 63 -115 8 -11 14 -26 14 -35 0 -8 -31 -76 -69 -150 -90 -176
+-178 -385 -247 -587 -18 -50 -20 -52 -74 -68 -30 -10 -73 -23 -95 -30 -34 -11
+-101 -31 -140 -41 -5 -2 -41 -12 -80 -24 -38 -12 -77 -23 -85 -25 -8 -2 -46
+-13 -85 -25 -38 -12 -77 -23 -85 -25 -8 -2 -69 -20 -135 -40 -177 -53 -269
+-81 -370 -110 -82 -24 -95 -31 -147 -83 l-57 -57 -1 -712 c0 -688 0 -713 19
+-722 10 -6 56 -21 102 -35 46 -13 170 -50 274 -81 105 -31 197 -58 205 -60 8
+-2 47 -14 85 -25 111 -34 154 -47 245 -73 113 -33 287 -85 326 -98 27 -8 34
+-18 49 -67 79 -263 165 -482 275 -702 l68 -136 -52 -100 c-29 -54 -81 -151
+-116 -214 -34 -63 -79 -146 -100 -185 -21 -38 -65 -119 -97 -180 -97 -177
+-187 -344 -236 -436 l-46 -85 510 -510 509 -509 58 29 c31 17 91 49 132 71 82
+46 409 224 535 291 44 24 134 72 200 109 66 36 152 82 191 102 l71 36 179 -90
+c98 -50 240 -114 314 -143 74 -29 144 -56 155 -61 18 -7 175 -57 231 -74 14
+-3 25 -19 32 -43 18 -63 66 -228 112 -377 11 -38 23 -77 25 -85 3 -13 70 -240
+139 -470 13 -41 40 -132 61 -203 l38 -127 723 0 723 0 55 66 c31 36 56 68 57
+72 1 13 8 37 29 107 12 39 23 77 25 85 2 8 13 47 25 85 12 39 23 77 25 85 2 8
+13 44 24 80 11 36 63 211 116 390 53 179 100 332 105 340 4 8 48 28 97 44 156
+50 363 137 548 229 l180 90 55 -29 c30 -16 118 -63 195 -105 125 -68 203 -110
+445 -241 36 -20 119 -65 185 -100 66 -36 159 -86 206 -111 47 -26 92 -47 101
+-47 18 0 1118 1103 1118 1122 0 7 -12 33 -26 58 -14 25 -45 81 -69 125 -23 44
+-71 132 -105 195 -35 63 -138 255 -230 426 -93 170 -177 326 -189 345 -11 19
+-21 41 -21 50 0 9 27 69 60 133 53 104 109 230 156 351 9 22 19 47 23 55 4 8
+25 69 46 135 21 66 43 125 49 132 6 6 52 23 101 38 148 44 177 52 250 75 39
+11 77 23 85 25 8 2 47 13 85 25 39 12 77 23 85 25 8 2 47 13 85 25 39 12 77
+23 85 25 8 2 69 20 135 40 66 20 158 47 204 60 74 21 91 30 138 77 l53 52 0
+722 0 722 -62 21 c-59 19 -325 98 -358 106 -8 2 -46 14 -85 25 -105 32 -151
+46 -250 75 -49 15 -126 37 -170 50 -44 13 -118 35 -165 49 -47 13 -114 33
+-150 45 l-65 20 -34 103 c-67 211 -195 507 -293 684 l-45 80 80 145 c43 79 99
+182 124 229 57 106 223 413 360 665 24 44 51 95 60 113 l17 33 -499 499 c-275
+275 -507 500 -515 500 -9 0 -24 -6 -35 -13 -11 -8 -58 -34 -105 -59 -90 -48
+-253 -136 -447 -242 -65 -35 -145 -78 -178 -96 -92 -49 -169 -91 -302 -164
+l-121 -66 -159 79 c-192 96 -331 153 -523 216 -80 26 -154 51 -166 55 -15 6
+-26 29 -43 86 -33 117 -60 207 -161 544 -51 168 -102 341 -115 385 -13 44 -33
+112 -45 150 -12 39 -23 78 -25 88 -2 9 -7 22 -10 27 -4 7 -260 10 -729 10
+l-723 0 -49 -52z m981 -3342 c83 -16 89 -17 166 -35 248 -57 582 -231 789
+-413 344 -302 557 -671 644 -1118 23 -119 27 -176 27 -362 0 -163 -9 -263 -30
+-361 -6 -23 -13 -58 -16 -77 -13 -77 -89 -282 -150 -405 -178 -362 -407 -601
+-735 -767 -355 -180 -750 -252 -1120 -203 -63 8 -126 17 -140 20 -14 3 -47 10
+-75 16 -91 18 -310 97 -423 154 -560 280 -966 827 -1058 1425 -30 198 -30 501
+1 650 3 14 8 41 11 60 31 174 128 426 228 593 120 200 230 324 406 456 216
+163 515 302 745 346 73 14 203 35 240 39 83 9 412 -4 490 -18z"
+                  ></path>
+                </g>
+              </svg>
+              <svg
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 1280.000000 1280.000000"
+                height="1280.000000pt"
+                width="1280.000000pt"
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.0"
+                className="gear g3"
+              >
+                <g
+                  stroke="none"
+                  fill="#fff"
+                  transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                >
+                  <path
+                    d="M5664 11538 c-38 -40 -55 -68 -68 -113 -19 -65 -44 -149 -70 -235 -9
+-30 -74 -248 -145 -484 l-128 -429 -97 -33 c-176 -60 -334 -125 -503 -209
+l-168 -83 -100 53 c-55 29 -154 82 -220 117 -66 36 -147 80 -180 98 -232 125
+-441 239 -505 275 -41 22 -100 54 -131 70 l-57 29 -108 -101 c-60 -56 -315
+-308 -568 -561 l-458 -460 54 -98 c30 -55 77 -139 103 -189 26 -49 62 -115 78
+-145 17 -30 57 -103 89 -162 32 -60 86 -159 119 -220 34 -62 84 -156 112 -208
+27 -52 56 -104 63 -115 8 -11 14 -26 14 -35 0 -8 -31 -76 -69 -150 -90 -176
+-178 -385 -247 -587 -18 -50 -20 -52 -74 -68 -30 -10 -73 -23 -95 -30 -34 -11
+-101 -31 -140 -41 -5 -2 -41 -12 -80 -24 -38 -12 -77 -23 -85 -25 -8 -2 -46
+-13 -85 -25 -38 -12 -77 -23 -85 -25 -8 -2 -69 -20 -135 -40 -177 -53 -269
+-81 -370 -110 -82 -24 -95 -31 -147 -83 l-57 -57 -1 -712 c0 -688 0 -713 19
+-722 10 -6 56 -21 102 -35 46 -13 170 -50 274 -81 105 -31 197 -58 205 -60 8
+-2 47 -14 85 -25 111 -34 154 -47 245 -73 113 -33 287 -85 326 -98 27 -8 34
+-18 49 -67 79 -263 165 -482 275 -702 l68 -136 -52 -100 c-29 -54 -81 -151
+-116 -214 -34 -63 -79 -146 -100 -185 -21 -38 -65 -119 -97 -180 -97 -177
+-187 -344 -236 -436 l-46 -85 510 -510 509 -509 58 29 c31 17 91 49 132 71 82
+46 409 224 535 291 44 24 134 72 200 109 66 36 152 82 191 102 l71 36 179 -90
+c98 -50 240 -114 314 -143 74 -29 144 -56 155 -61 18 -7 175 -57 231 -74 14
+-3 25 -19 32 -43 18 -63 66 -228 112 -377 11 -38 23 -77 25 -85 3 -13 70 -240
+139 -470 13 -41 40 -132 61 -203 l38 -127 723 0 723 0 55 66 c31 36 56 68 57
+72 1 13 8 37 29 107 12 39 23 77 25 85 2 8 13 47 25 85 12 39 23 77 25 85 2 8
+13 44 24 80 11 36 63 211 116 390 53 179 100 332 105 340 4 8 48 28 97 44 156
+50 363 137 548 229 l180 90 55 -29 c30 -16 118 -63 195 -105 125 -68 203 -110
+445 -241 36 -20 119 -65 185 -100 66 -36 159 -86 206 -111 47 -26 92 -47 101
+-47 18 0 1118 1103 1118 1122 0 7 -12 33 -26 58 -14 25 -45 81 -69 125 -23 44
+-71 132 -105 195 -35 63 -138 255 -230 426 -93 170 -177 326 -189 345 -11 19
+-21 41 -21 50 0 9 27 69 60 133 53 104 109 230 156 351 9 22 19 47 23 55 4 8
+25 69 46 135 21 66 43 125 49 132 6 6 52 23 101 38 148 44 177 52 250 75 39
+11 77 23 85 25 8 2 47 13 85 25 39 12 77 23 85 25 8 2 47 13 85 25 39 12 77
+23 85 25 8 2 69 20 135 40 66 20 158 47 204 60 74 21 91 30 138 77 l53 52 0
+722 0 722 -62 21 c-59 19 -325 98 -358 106 -8 2 -46 14 -85 25 -105 32 -151
+46 -250 75 -49 15 -126 37 -170 50 -44 13 -118 35 -165 49 -47 13 -114 33
+-150 45 l-65 20 -34 103 c-67 211 -195 507 -293 684 l-45 80 80 145 c43 79 99
+182 124 229 57 106 223 413 360 665 24 44 51 95 60 113 l17 33 -499 499 c-275
+275 -507 500 -515 500 -9 0 -24 -6 -35 -13 -11 -8 -58 -34 -105 -59 -90 -48
+-253 -136 -447 -242 -65 -35 -145 -78 -178 -96 -92 -49 -169 -91 -302 -164
+l-121 -66 -159 79 c-192 96 -331 153 -523 216 -80 26 -154 51 -166 55 -15 6
+-26 29 -43 86 -33 117 -60 207 -161 544 -51 168 -102 341 -115 385 -13 44 -33
+112 -45 150 -12 39 -23 78 -25 88 -2 9 -7 22 -10 27 -4 7 -260 10 -729 10
+l-723 0 -49 -52z m981 -3342 c83 -16 89 -17 166 -35 248 -57 582 -231 789
+-413 344 -302 557 -671 644 -1118 23 -119 27 -176 27 -362 0 -163 -9 -263 -30
+-361 -6 -23 -13 -58 -16 -77 -13 -77 -89 -282 -150 -405 -178 -362 -407 -601
+-735 -767 -355 -180 -750 -252 -1120 -203 -63 8 -126 17 -140 20 -14 3 -47 10
+-75 16 -91 18 -310 97 -423 154 -560 280 -966 827 -1058 1425 -30 198 -30 501
+1 650 3 14 8 41 11 60 31 174 128 426 228 593 120 200 230 324 406 456 216
+163 515 302 745 346 73 14 203 35 240 39 83 9 412 -4 490 -18z"
+                  ></path>
+                </g>
+              </svg>
             </div>
+
+            <h2 className="fw-bold display-2 mb-4">
+              Western Sydney Tamil Study Centre Inc
+            </h2>
+            <h3 className="display-4 fw-bold"> Coming Soon ...</h3>
+            <h5>Our site is currently Under Renovation</h5>
+            <p>
+              Contact us in Email{" "}
+              <a href="mailto:info@wstsc.org.au" className="text-white">
+                info@wstsc.org.au
+              </a>
+            </p>
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
