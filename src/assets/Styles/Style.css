@@ -152,7 +152,7 @@
   right: 22px;
 }
 
-.gear-wrapper:hover .g1,
+/* .gear-wrapper:hover .g1,
 .gear-wrapper:hover .g3 {
   animation: rotateGear 0.8s linear infinite;
   filter: drop-shadow(1px 1px 2px #fff);
@@ -161,7 +161,7 @@
 .gear-wrapper:hover .g2 {
   animation: rotateGear 0.8s linear infinite reverse;
   filter: drop-shadow(1px 1px 2px #fff);
-}
+} */
 
 @keyframes rotateGear {
   0% {
